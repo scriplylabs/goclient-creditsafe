@@ -1,0 +1,2 @@
+*.gen.go linguist-generated=true -diff
+*/openapi/*.json linguist-vendored=true -diff

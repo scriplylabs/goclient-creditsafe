@@ -1,0 +1,89 @@
+{{/* Replaces oapi-codegen's client-with-responses.tmpl. Instead of response
+   structs with JSON200/JSON404/... fields, each operation becomes a method on
+   Client that returns its 2xx JSON body and an error. Non-2xx responses never
+   reach these methods: the transport (apicall.CheckingDoer) turns them into
+   *creditsafe.APIError. Shared by every generated package; each package's
+   oapi-codegen.yaml imports internal/apicall for it.
+
+   Per operation:
+     - a 2xx JSON response of type T   -> (*T, error), or (T, error) for a slice
+     - a 2xx body that isn't JSON      -> (*http.Response, error); the caller
+       reads and closes the body (file downloads)
+     - no 2xx body (204, 202)          -> error
+     - a JSON request body             -> body parameter typed from the spec
+     - another request body only       -> contentType string, body io.Reader
+       (the multipart uploads) */}}
+{{range . -}}
+{{$op := . -}}
+{{$opid := .OperationId -}}
+{{$hasParams := .RequiresParamObject -}}
+{{$pathParams := .PathParams -}}
+{{$okType := "" -}}
+{{range getResponseTypeDefinitions . -}}
+{{if and (eq $okType "") (eq (printf "%.1s" .ResponseName) "2") (eq .ContentTypeName "application/json") -}}
+{{$okType = .Schema.TypeDecl -}}
+{{end -}}
+{{end -}}
+{{$okBody := false -}}
+{{range .Responses}}{{if and (eq (printf "%.1s" .StatusCode) "2") .Contents}}{{$okBody = true}}{{end}}{{end -}}
+{{$retType := "error" -}}
+{{$retStmt := "return apicall.Discard(resp, err)" -}}
+{{if ne $okType "" -}}
+{{if eq (printf "%.2s" $okType) "[]" -}}
+{{$retType = printf "(%s, error)" $okType -}}
+{{$retStmt = printf "return apicall.DecodeValue[%s](%q, resp, err)" $okType $opid -}}
+{{else -}}
+{{$retType = printf "(*%s, error)" $okType -}}
+{{$retStmt = printf "return apicall.Decode[%s](%q, resp, err)" $okType $opid -}}
+{{end -}}
+{{else if $okBody -}}
+{{$retType = "(*http.Response, error)" -}}
+{{$retStmt = "return resp, err" -}}
+{{end -}}
+{{$typedBody := false -}}
+{{range .Bodies}}{{if .IsSupportedByClient}}{{$typedBody = true}}{{end}}{{end -}}
+
+{{if not .HasBody}}
+// {{$opid}} sends {{.Method}} {{.Path}}.
+{{- if eq $retType "(*http.Response, error)"}}
+// The response body is the file itself; the caller must close it.
+{{- end}}
+{{- with .Summary}}
+//
+{{$op.SummaryAsComment ""}}
+{{- end}}
+{{with .DeprecationComment}}{{.}}
+{{end -}}
+func (c *Client) {{$opid}}(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, reqEditors ...RequestEditorFn) {{$retType}} {
+	resp, err := c.raw.{{$opid}}(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, reqEditors...)
+	{{$retStmt}}
+}
+{{else if $typedBody}}
+{{- range .Bodies}}{{if .IsSupportedByClient}}
+// {{$opid}}{{.Suffix}} sends {{$op.Method}} {{$op.Path}}.
+{{- with $op.Summary}}
+//
+{{$op.SummaryAsComment ""}}
+{{- end}}
+{{with $op.DeprecationComment}}{{.}}
+{{end -}}
+func (c *Client) {{$opid}}{{.Suffix}}(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, body {{$opid}}{{.NameTag}}RequestBody, reqEditors ...RequestEditorFn) {{$retType}} {
+	resp, err := c.raw.{{$opid}}{{.Suffix}}(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, body, reqEditors...)
+	{{$retStmt}}
+}
+{{end}}{{end}}
+{{- else}}
+// {{$opid}} sends {{.Method}} {{.Path}} with body, as is, under contentType
+// (for example a multipart/form-data body built with mime/multipart).
+{{- with .Summary}}
+//
+{{$op.SummaryAsComment ""}}
+{{- end}}
+{{with .DeprecationComment}}{{.}}
+{{end -}}
+func (c *Client) {{$opid}}(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, contentType string, body io.Reader, reqEditors ...RequestEditorFn) {{$retType}} {
+	resp, err := c.raw.{{$opid}}WithBody(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, contentType, body, reqEditors...)
+	{{$retStmt}}
+}
+{{end}}
+{{end}}

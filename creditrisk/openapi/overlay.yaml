@@ -1,0 +1,83 @@
+# Go method names for package creditrisk: renames each operationId, and
+# drops POST /authenticate (package creditsafe handles login).
+overlay: 1.0.0
+info:
+  title: goclient-creditsafe Credit and Risk names
+  version: 1.0.0
+actions:
+  - target: $.paths['/authenticate']
+    remove: true
+  # The Accept header picks a PDF or HTML report, but its oneOf schema generates
+  # a field callers can't set, and those formats don't decode as the JSON
+  # report the method returns. Dropped until PDF reports get their own method.
+  - target: $.paths['/companies/{connectId}'].get.parameters[?(@.name=='Accept')]
+    remove: true
+  - target: $.paths['/access/countries/{countryCode}/reportLanguages'].get
+    update:
+      operationId: ListReportLanguages
+  - target: $.paths['/companies/searchcriteria'].get
+    update:
+      operationId: GetCompanySearchCriteria
+  - target: $.paths['/people/searchcriteria'].get
+    update:
+      operationId: GetDirectorSearchCriteria
+  - target: $.paths['/companies'].get
+    update:
+      operationId: SearchCompanies
+  - target: $.paths['/companies/schema/{countryCode}'].get
+    update:
+      operationId: GetReportSchema
+  - target: $.paths['/companies/{connectId}'].get
+    update:
+      operationId: GetCompanyCreditReport
+  - target: $.paths['/companies/match'].get
+    update:
+      operationId: MatchCompanies
+  - target: $.paths['/people'].get
+    update:
+      operationId: SearchDirectors
+  - target: $.paths['/people/{peopleId}'].get
+    update:
+      operationId: GetDirectorReport
+  - target: $.paths['/images/companies'].get
+    update:
+      operationId: ListCompanyImages
+  - target: $.paths['/images/companies/types'].get
+    update:
+      operationId: ListImageTypes
+  - target: $.paths['/images/{imageId}'].get
+    update:
+      operationId: GetImage
+  - target: $.paths['/freshinvestigations'].post
+    update:
+      operationId: CreateFreshInvestigation
+  - target: $.paths['/freshinvestigations'].get
+    update:
+      operationId: ListFreshInvestigations
+  - target: $.paths['/freshinvestigations/{orderId}'].get
+    update:
+      operationId: GetFreshInvestigation
+  - target: $.paths['/freshinvestigations/{orderId}'].delete
+    update:
+      operationId: DeleteFreshInvestigation
+  - target: $.paths['/freshinvestigations/{orderId}'].patch
+    update:
+      operationId: UpdateFreshInvestigationReport
+  - target: $.paths['/freshinvestigations/{orderId}/attachments'].post
+    update:
+      operationId: CreateFreshInvestigationAttachment
+  - target: $.paths['/freshinvestigations/{orderId}/attachments'].get
+    update:
+      operationId: ListFreshInvestigationAttachments
+  - target: $.paths['/freshinvestigations/{orderId}/attachments/{id}'].get
+    update:
+      operationId: DownloadFreshInvestigationAttachment
+  - target: $.paths['/freshinvestigations/{orderId}/comments'].post
+    update:
+      operationId: CreateFreshInvestigationComment
+  - target: $.paths['/freshinvestigations/{orderId}/comments'].get
+    update:
+      operationId: ListFreshInvestigationComments
+  - target: $.paths['/freshinvestigations/{orderId}/report'].get
+    update:
+      operationId: GetFreshInvestigationReport

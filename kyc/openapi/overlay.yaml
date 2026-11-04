@@ -1,0 +1,406 @@
+# Generated once from a names table; edit by hand from now on.
+# Renames Creditsafe's operationIds to the Go method names of package kyc,
+# and drops POST /authenticate (package creditsafe handles login).
+overlay: 1.0.0
+info:
+  title: goclient-creditsafe KYC Protect names
+  version: 1.0.0
+actions:
+  - target: $.paths['/authenticate']
+    remove: true
+  - target: $.paths['/compliance/kyc-protect/profiles/businesses/import'].post
+    update:
+      operationId: ImportBusinessProfiles
+  - target: $.paths['/compliance/kyc-protect/profiles'].post
+    update:
+      operationId: CreateProfile
+  - target: $.paths['/compliance/kyc-protect/profiles'].get
+    update:
+      operationId: ListProfiles
+  - target: $.paths['/compliance/kyc-protect/profiles'].delete
+    update:
+      operationId: DeleteProfiles
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}'].get
+    update:
+      operationId: GetProfile
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}'].delete
+    update:
+      operationId: DeleteProfile
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}'].put
+    update:
+      operationId: UpdateProfile
+  - target: $.paths['/compliance/kyc-protect/profiles/types'].get
+    update:
+      operationId: ListProfileTypes
+  - target: $.paths['/compliance/kyc-protect/profiles/assign'].put
+    update:
+      operationId: AssignProfiles
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/notes'].post
+    update:
+      operationId: CreateProfileNote
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/notes'].get
+    update:
+      operationId: ListProfileNotes
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/notes/{noteId}'].get
+    update:
+      operationId: GetProfileNote
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/notes/{noteId}'].put
+    update:
+      operationId: UpdateProfileNote
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/notes/{noteId}'].delete
+    update:
+      operationId: DeleteProfileNote
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details'].get
+    update:
+      operationId: GetProfileDetails
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details'].put
+    update:
+      operationId: UpdateProfileDetails
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details/addresses'].post
+    update:
+      operationId: CreateProfileAddress
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details/addresses'].get
+    update:
+      operationId: ListProfileAddresses
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details/addresses/{addressId}'].get
+    update:
+      operationId: GetProfileAddress
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details/addresses/{addressId}'].put
+    update:
+      operationId: UpdateProfileAddress
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/details/addresses/{addressId}'].delete
+    update:
+      operationId: DeleteProfileAddress
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties'].post
+    update:
+      operationId: CreateKeyParties
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties'].get
+    update:
+      operationId: ListKeyParties
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties'].put
+    update:
+      operationId: UpdateKeyParties
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties'].delete
+    update:
+      operationId: DeleteKeyParties
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties/searches'].get
+    update:
+      operationId: ListKeyPartySearches
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties/searches'].delete
+    update:
+      operationId: DeleteKeyPartySearches
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties/searches/bulk'].post
+    update:
+      operationId: BulkSearchKeyParties
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties/searches/link'].post
+    update:
+      operationId: LinkKeyPartySearches
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties/{keyPartyId}'].put
+    update:
+      operationId: UpdateKeyParty
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/keyparties/{keyPartyId}'].delete
+    update:
+      operationId: DeleteKeyParty
+  - target: $.paths['/compliance/kyc-protect/lookup/currencyCodes'].get
+    update:
+      operationId: ListCurrencyCodes
+  - target: $.paths['/compliance/kyc-protect/lookup/countryCodes'].get
+    update:
+      operationId: ListCountryCodes
+  - target: $.paths['/compliance/kyc-protect/lookup/kycMonitoring/countryCodes'].get
+    update:
+      operationId: ListMonitoringCountryCodes
+  - target: $.paths['/compliance/kyc-protect/lookup/sanctionBodies'].get
+    update:
+      operationId: ListSanctionBodies
+  - target: $.paths['/compliance/kyc-protect/settings/preferences/aml'].get
+    update:
+      operationId: GetAMLPreferences
+  - target: $.paths['/compliance/kyc-protect/settings/preferences/aml'].put
+    update:
+      operationId: UpdateAMLPreferences
+  - target: $.paths['/compliance/kyc-protect/profiles/document-types'].get
+    update:
+      operationId: ListProfileDocumentTypes
+  - target: $.paths['/compliance/kyc-protect/profiles/assign/bulk'].put
+    update:
+      operationId: BulkAssignProfiles
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/attachments'].post
+    update:
+      operationId: CreateProfileAttachment
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/attachments'].get
+    update:
+      operationId: ListProfileAttachments
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}'].get
+    update:
+      operationId: GetProfileAttachment
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}'].put
+    update:
+      operationId: UpdateProfileAttachment
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}'].delete
+    update:
+      operationId: DeleteProfileAttachment
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}/download'].get
+    update:
+      operationId: DownloadProfileAttachment
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/searches'].get
+    update:
+      operationId: ListProfileSearches
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/searches'].delete
+    update:
+      operationId: DeleteProfileSearches
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/searches/link'].post
+    update:
+      operationId: LinkProfileSearches
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/searches/bulk'].post
+    update:
+      operationId: BulkSearchProfile
+  - target: $.paths['/compliance/kyc-protect/searches/businesses'].post
+    update:
+      operationId: CreateBusinessSearch
+  - target: $.paths['/compliance/kyc-protect/searches/businesses'].get
+    update:
+      operationId: ListBusinessSearches
+  - target: $.paths['/compliance/kyc-protect/searches/businesses'].put
+    update:
+      operationId: UpdateBusinessSearches
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}'].get
+    update:
+      operationId: GetBusinessSearch
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}'].put
+    update:
+      operationId: UpdateBusinessSearch
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits'].get
+    update:
+      operationId: ListBusinessSearchHits
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits'].put
+    update:
+      operationId: UpdateBusinessSearchHits
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}'].get
+    update:
+      operationId: GetBusinessSearchHit
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}'].put
+    update:
+      operationId: UpdateBusinessSearchHit
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/download'].get
+    update:
+      operationId: DownloadBusinessSearchHit
+  - target: $.paths['/compliance/kyc-protect/searchLinks/businesses/{supplierHitId}'].get
+    update:
+      operationId: GetBusinessSearchLinks
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/sources/{sourceId}/copyrighted/download'].get
+    update:
+      operationId: DownloadBusinessSearchHitCopyrightedSource
+  - target: $.paths['/compliance/kyc-protect/searches/individuals'].post
+    update:
+      operationId: CreateIndividualSearch
+  - target: $.paths['/compliance/kyc-protect/searches/individuals'].get
+    update:
+      operationId: ListIndividualSearches
+  - target: $.paths['/compliance/kyc-protect/searches/individuals'].put
+    update:
+      operationId: UpdateIndividualSearches
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}'].get
+    update:
+      operationId: GetIndividualSearch
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}'].put
+    update:
+      operationId: UpdateIndividualSearch
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits'].get
+    update:
+      operationId: ListIndividualSearchHits
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits'].put
+    update:
+      operationId: UpdateIndividualSearchHits
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}'].get
+    update:
+      operationId: GetIndividualSearchHit
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}'].put
+    update:
+      operationId: UpdateIndividualSearchHit
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/download'].get
+    update:
+      operationId: DownloadIndividualSearchHit
+  - target: $.paths['/compliance/kyc-protect/searchLinks/individuals/{supplierHitId}'].get
+    update:
+      operationId: GetIndividualSearchLinks
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/sources/{sourceId}/copyrighted/download'].get
+    update:
+      operationId: DownloadIndividualSearchHitCopyrightedSource
+  - target: $.paths['/compliance/kyc-protect/schedules'].post
+    update:
+      operationId: CreateSchedule
+  - target: $.paths['/compliance/kyc-protect/schedules'].get
+    update:
+      operationId: ListSchedules
+  - target: $.paths['/compliance/kyc-protect/schedules'].delete
+    update:
+      operationId: DeleteSchedules
+  - target: $.paths['/compliance/kyc-protect/schedules'].put
+    update:
+      operationId: UpdateSchedules
+  - target: $.paths['/compliance/kyc-protect/schedules/{scheduleId}'].get
+    update:
+      operationId: GetSchedule
+  - target: $.paths['/compliance/kyc-protect/schedules/{scheduleId}'].delete
+    update:
+      operationId: DeleteSchedule
+  - target: $.paths['/compliance/kyc-protect/schedules/{scheduleId}'].put
+    update:
+      operationId: UpdateSchedule
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/schedules'].get
+    update:
+      operationId: ListProfileSchedules
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/schedules/{scheduleId}'].get
+    update:
+      operationId: GetProfileSchedule
+  - target: $.paths['/compliance/kyc-protect/schedules/amlAlerts'].get
+    update:
+      operationId: ListScheduleAMLAlerts
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/amlAlerts'].get
+    update:
+      operationId: ListProfileAMLAlerts
+  - target: $.paths['/compliance/kyc-protect/profiles/{profileId}/hits'].get
+    update:
+      operationId: ListProfileHits
+  - target: $.paths['/compliance/kyc-protect/asyncAmlJobs'].get
+    update:
+      operationId: ListAsyncAMLJobs
+  - target: $.paths['/compliance/kyc-protect/asyncAmlJobs/{jobId}'].get
+    update:
+      operationId: GetAsyncAMLJob
+  - target: $.paths['/compliance/kyc-protect/asyncAmlJobs/{jobId}/criteria'].get
+    update:
+      operationId: GetAsyncAMLJobCriteria
+  - target: $.paths['/compliance/kyc-protect/audits'].get
+    update:
+      operationId: ListAudits
+  - target: $.paths['/compliance/kyc-protect/batchUploads/template'].get
+    update:
+      operationId: GetBatchUploadTemplate
+  - target: $.paths['/compliance/kyc-protect/batchUploads'].post
+    update:
+      operationId: CreateBatchUpload
+  - target: $.paths['/compliance/kyc-protect/batchUploads'].get
+    update:
+      operationId: ListBatchUploads
+  - target: $.paths['/compliance/kyc-protect/batchUploads/{uploadId}'].get
+    update:
+      operationId: GetBatchUpload
+  - target: $.paths['/compliance/kyc-protect/batchUploads/{uploadId}/errors/download'].get
+    update:
+      operationId: DownloadBatchUploadErrors
+  - target: $.paths['/compliance/kyc-protect/batchUploads/{uploadId}/retry'].put
+    update:
+      operationId: RetryBatchUpload
+  - target: $.paths['/compliance/kyc-protect/kycMonitoring/profiles/bulk'].post
+    update:
+      operationId: BulkAddMonitoredProfiles
+  - target: $.paths['/compliance/kyc-protect/kycMonitoring/profiles'].delete
+    update:
+      operationId: DeleteMonitoredProfiles
+  - target: $.paths['/compliance/kyc-protect/kycMonitoring/profiles/{profileId}/alerts'].get
+    update:
+      operationId: ListMonitoringAlerts
+  - target: $.paths['/compliance/kyc-protect/kycMonitoring/profiles/{profileId}/alerts/{alertId}'].get
+    update:
+      operationId: GetMonitoringAlert
+  - target: $.paths['/compliance/kyc-protect/kycMonitoring/profiles/{profileId}/alerts/{alertId}'].put
+    update:
+      operationId: UpdateMonitoringAlert
+  - target: $.paths['/compliance/kyc-protect/profiles/alerts/metrics'].get
+    update:
+      operationId: GetProfileAlertMetrics
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/download'].post
+    update:
+      operationId: DownloadBusinessSearches
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/download'].post
+    update:
+      operationId: DownloadBusinessSearch
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/download'].post
+    update:
+      operationId: DownloadIndividualSearches
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/download'].post
+    update:
+      operationId: DownloadIndividualSearch
+  - target: $.paths['/compliance/kyc-protect/reports/criteria/{type}'].get
+    update:
+      operationId: GetReportCriteria
+  - target: $.paths['/compliance/kyc-protect/reports'].post
+    update:
+      operationId: CreateReport
+  - target: $.paths['/compliance/kyc-protect/reports'].get
+    update:
+      operationId: ListReports
+  - target: $.paths['/compliance/kyc-protect/reports/{reportId}'].get
+    update:
+      operationId: GetReport
+  - target: $.paths['/compliance/kyc-protect/reports/{reportId}/download'].get
+    update:
+      operationId: DownloadReport
+  - target: $.paths['/compliance/kyc-protect/complianceAlerts/{connectId}'].get
+    update:
+      operationId: GetComplianceAlerts
+  - target: $.paths['/compliance/kyc-protect/searchLinks/businesses/{supplierHitId}/download'].post
+    update:
+      operationId: DownloadBusinessSearchLinks
+  - target: $.paths['/compliance/kyc-protect/searchLinks/individuals/{supplierHitId}/download'].post
+    update:
+      operationId: DownloadIndividualSearchLinks
+  - target: $.paths['/compliance/kyc-protect/searches'].get
+    update:
+      operationId: ListSearches
+  - target: $.paths['/compliance/kyc-protect/searches/monitored/download'].get
+    update:
+      operationId: DownloadMonitoredSearches
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/note'].put
+    update:
+      operationId: UpdateBusinessSearchHitNote
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/note'].put
+    update:
+      operationId: UpdateIndividualSearchHitNote
+  - target: $.paths['/compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/changes'].get
+    update:
+      operationId: ListBusinessSearchHitChanges
+  - target: $.paths['/compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/changes'].get
+    update:
+      operationId: ListIndividualSearchHitChanges
+  - target: $.paths['/compliance/kyc-protect/authorization/audits'].get
+    update:
+      operationId: ListAuthorizationAudits
+  - target: $.paths['/compliance/kyc-protect/authorization/users/roles/download'].get
+    update:
+      operationId: DownloadUserRoles
+  - target: $.paths['/compliance/kyc-protect/authorization/users/me/roles/permissions'].get
+    update:
+      operationId: GetMyRolePermissions
+  - target: $.paths['/compliance/kyc-protect/authorization/lookUp/permissions'].get
+    update:
+      operationId: ListPermissions
+  - target: $.paths['/compliance/kyc-protect/authorization/lookUp/roles'].get
+    update:
+      operationId: ListRoles
+  - target: $.paths['/compliance/kyc-protect/authorization/roles/permissions'].get
+    update:
+      operationId: ListRolePermissions
+  - target: $.paths['/compliance/kyc-protect/authorization/roles/permissions'].put
+    update:
+      operationId: ReplaceAllRolePermissions
+  - target: $.paths['/compliance/kyc-protect/authorization/roles/permissions'].patch
+    update:
+      operationId: UpdateAllRolePermissions
+  - target: $.paths['/compliance/kyc-protect/authorization/users/{userId}/roles'].get
+    update:
+      operationId: ListUserRoles
+  - target: $.paths['/compliance/kyc-protect/authorization/users/roles'].get
+    update:
+      operationId: ListAllUserRoles
+  - target: $.paths['/compliance/kyc-protect/authorization/users/roles'].put
+    update:
+      operationId: UpdateUserRoles
+  - target: $.paths['/compliance/kyc-protect/authorization/roles/{roleId}/permissions'].get
+    update:
+      operationId: GetRolePermissions
+  - target: $.paths['/compliance/kyc-protect/authorization/roles/{roleId}/permissions'].put
+    update:
+      operationId: ReplaceRolePermissions
