@@ -1,0 +1,18 @@
+# oapi-codegen config for package kyc. Run scripts/generate.sh, not
+# oapi-codegen directly: the script pins the version and checks the result.
+# Paths are relative to this directory.
+package: kyc
+output: kyc.gen.go
+generate:
+  models: true
+  client: true
+output-options:
+  # Keep every schema, including ones only reachable from webhooks or examples.
+  skip-prune: true
+  # The generated low-level client is internal; Client (kyc.go) wraps it.
+  client-type-name: rawClient
+  overlay:
+    path: openapi/overlay.yaml
+  user-templates:
+    client.tmpl: templates/client.tmpl
+    client-with-responses.tmpl: templates/client-with-responses.tmpl

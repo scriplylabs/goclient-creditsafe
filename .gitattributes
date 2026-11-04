@@ -1,0 +1,2 @@
+kyc/kyc.gen.go linguist-generated=true -diff
+kyc/openapi/kycProtect.json linguist-vendored=true -diff

@@ -1,0 +1,78 @@
+{{/* Replaces oapi-codegen's client-with-responses.tmpl. Instead of response
+   structs with JSON200/JSON404/... fields, each operation becomes a method on
+   Client that returns its 2xx JSON body and an error. Non-2xx responses never
+   reach these methods: Client's transport turns them into
+   *creditsafe.APIError (see kyc.go).
+
+   Per operation:
+     - a 2xx JSON response of type T   -> (*T, error), or (T, error) for a slice
+     - no 2xx JSON response (204, 202) -> error
+     - a JSON request body             -> body parameter typed from the spec
+     - another request body only       -> contentType string, body io.Reader
+       (the multipart uploads) */}}
+{{range . -}}
+{{$op := . -}}
+{{$opid := .OperationId -}}
+{{$hasParams := .RequiresParamObject -}}
+{{$pathParams := .PathParams -}}
+{{$okType := "" -}}
+{{range getResponseTypeDefinitions . -}}
+{{if and (eq $okType "") (eq (printf "%.1s" .ResponseName) "2") (eq .ContentTypeName "application/json") -}}
+{{$okType = .Schema.TypeDecl -}}
+{{end -}}
+{{end -}}
+{{$retType := "error" -}}
+{{$retStmt := "return discard(resp, err)" -}}
+{{if ne $okType "" -}}
+{{if eq (printf "%.2s" $okType) "[]" -}}
+{{$retType = printf "(%s, error)" $okType -}}
+{{$retStmt = printf "return decodeValue[%s](%q, resp, err)" $okType $opid -}}
+{{else -}}
+{{$retType = printf "(*%s, error)" $okType -}}
+{{$retStmt = printf "return decode[%s](%q, resp, err)" $okType $opid -}}
+{{end -}}
+{{end -}}
+{{$typedBody := false -}}
+{{range .Bodies}}{{if .IsSupportedByClient}}{{$typedBody = true}}{{end}}{{end -}}
+
+{{if not .HasBody}}
+// {{$opid}} sends {{.Method}} {{.Path}}.
+{{- with .Summary}}
+//
+{{$op.SummaryAsComment ""}}
+{{- end}}
+{{with .DeprecationComment}}{{.}}
+{{end -}}
+func (c *Client) {{$opid}}(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, reqEditors ...RequestEditorFn) {{$retType}} {
+	resp, err := c.raw.{{$opid}}(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, reqEditors...)
+	{{$retStmt}}
+}
+{{else if $typedBody}}
+{{- range .Bodies}}{{if .IsSupportedByClient}}
+// {{$opid}}{{.Suffix}} sends {{$op.Method}} {{$op.Path}}.
+{{- with $op.Summary}}
+//
+{{$op.SummaryAsComment ""}}
+{{- end}}
+{{with $op.DeprecationComment}}{{.}}
+{{end -}}
+func (c *Client) {{$opid}}{{.Suffix}}(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, body {{$opid}}{{.NameTag}}RequestBody, reqEditors ...RequestEditorFn) {{$retType}} {
+	resp, err := c.raw.{{$opid}}{{.Suffix}}(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, body, reqEditors...)
+	{{$retStmt}}
+}
+{{end}}{{end}}
+{{- else}}
+// {{$opid}} sends {{.Method}} {{.Path}} with body, as is, under contentType
+// (for example a multipart/form-data body built with mime/multipart).
+{{- with .Summary}}
+//
+{{$op.SummaryAsComment ""}}
+{{- end}}
+{{with .DeprecationComment}}{{.}}
+{{end -}}
+func (c *Client) {{$opid}}(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, contentType string, body io.Reader, reqEditors ...RequestEditorFn) {{$retType}} {
+	resp, err := c.raw.{{$opid}}WithBody(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, contentType, body, reqEditors...)
+	{{$retStmt}}
+}
+{{end}}
+{{end}}
