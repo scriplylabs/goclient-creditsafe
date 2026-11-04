@@ -95,10 +95,10 @@ func (e *APIError) Error() string {
 
 // Is reports whether the error matches a sentinel for its status code.
 func (e *APIError) Is(target error) bool {
-	return target == statusSentinel(e.StatusCode)
+	return target == lookupSentinel(e.StatusCode)
 }
 
-func statusSentinel(status int) error {
+func lookupSentinel(status int) error {
 	switch {
 	case status == http.StatusBadRequest:
 		return ErrBadRequest

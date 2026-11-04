@@ -145,7 +145,7 @@ func TestLogsInOnceAndSendsBearer(t *testing.T) {
 		t.Errorf("logins = %d, want 1", f.logins.Load())
 	}
 
-	if jwtExpiry(got["token"]).IsZero() {
+	if parseJWTExpiry(got["token"]).IsZero() {
 		t.Errorf("echoed token %q isn't the issued JWT", got["token"])
 	}
 

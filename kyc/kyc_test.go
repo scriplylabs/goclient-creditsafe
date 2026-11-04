@@ -17,9 +17,9 @@ type recorded struct {
 	method, path, query, auth, contentType, body string
 }
 
-// fakeKYC serves handler under /v1 and returns a Client pointed at it, with
+// newFakeKYC serves handler under /v1 and returns a Client pointed at it, with
 // a static token so no login happens.
-func fakeKYC(t *testing.T, handler http.HandlerFunc) (*Client, *[]recorded) {
+func newFakeKYC(t *testing.T, handler http.HandlerFunc) (*Client, *[]recorded) {
 	t.Helper()
 
 	var reqs []recorded
@@ -46,7 +46,7 @@ func writeJSON(w http.ResponseWriter, status int, body string) {
 }
 
 func TestGetProfileDecodes(t *testing.T) {
-	k, reqs := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, reqs := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusOK, `{"id":"7b0f8a52-3c38-4a8e-9c49-2f1d1f6a8e10","assignedTo":"Ada"}`)
 	})
 
@@ -66,7 +66,7 @@ func TestGetProfileDecodes(t *testing.T) {
 }
 
 func TestGetProfileNotFoundIsAPIError(t *testing.T) {
-	k, _ := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, _ := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusNotFound, `{"correlationId":"c-9","message":"Profile not found"}`)
 	})
 
@@ -86,7 +86,7 @@ func TestGetProfileNotFoundIsAPIError(t *testing.T) {
 }
 
 func TestDeleteProfileNoContent(t *testing.T) {
-	k, reqs := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, reqs := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
@@ -100,7 +100,7 @@ func TestDeleteProfileNoContent(t *testing.T) {
 }
 
 func TestDeleteProfileForbidden(t *testing.T) {
-	k, _ := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, _ := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusForbidden, `{"message":"Access forbidden"}`)
 	})
 
@@ -110,7 +110,7 @@ func TestDeleteProfileForbidden(t *testing.T) {
 }
 
 func TestListProfilesSendsQuery(t *testing.T) {
-	k, reqs := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, reqs := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusOK, `{}`)
 	})
 
@@ -125,7 +125,7 @@ func TestListProfilesSendsQuery(t *testing.T) {
 }
 
 func TestListProfileAddressesReturnsSlice(t *testing.T) {
-	k, _ := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, _ := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusOK, `[{},{}]`)
 	})
 
@@ -140,7 +140,7 @@ func TestListProfileAddressesReturnsSlice(t *testing.T) {
 }
 
 func TestCreateProfileSendsJSON(t *testing.T) {
-	k, reqs := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, reqs := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusCreated, `{}`)
 	})
 
@@ -155,7 +155,7 @@ func TestCreateProfileSendsJSON(t *testing.T) {
 }
 
 func TestMalformedSuccessBody(t *testing.T) {
-	k, _ := fakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
+	k, _ := newFakeKYC(t, func(w http.ResponseWriter, _ *http.Request) {
 		writeJSON(w, http.StatusOK, `not json`)
 	})
 

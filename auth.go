@@ -48,12 +48,12 @@ func (a *authenticator) canLogin() bool {
 // setToken stores token and reads its expiry from the JWT's exp claim.
 func (a *authenticator) setToken(token string) {
 	a.token = token
-	a.expires = jwtExpiry(token)
+	a.expires = parseJWTExpiry(token)
 }
 
-// validToken returns the current token, logging in first when there is none
+// ensureToken returns the current token, logging in first when there is none
 // or it expires within renewBefore.
-func (a *authenticator) validToken(ctx context.Context) (string, error) {
+func (a *authenticator) ensureToken(ctx context.Context) (string, error) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
 
@@ -135,9 +135,9 @@ func (c *Client) Authenticate(ctx context.Context, username, password string) (*
 	return &out, nil
 }
 
-// jwtExpiry reads the exp claim of a JWT without verifying it (the API does
+// parseJWTExpiry reads the exp claim of a JWT without verifying it (the API does
 // that). It returns the zero time when the token isn't a JWT or has no exp.
-func jwtExpiry(token string) time.Time {
+func parseJWTExpiry(token string) time.Time {
 	parts := strings.Split(token, ".")
 	if len(parts) != 3 {
 		return time.Time{}

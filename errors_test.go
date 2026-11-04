@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func response(status int, body string, header http.Header) *http.Response {
+func newTestResponse(status int, body string, header http.Header) *http.Response {
 	if header == nil {
 		header = http.Header{}
 	}
@@ -85,7 +85,7 @@ func TestCheckResponseShapes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := CheckResponse(response(tt.status, tt.body, nil))
+			err := CheckResponse(newTestResponse(tt.status, tt.body, nil))
 
 			if !errors.Is(err, tt.sentinel) {
 				t.Fatalf("errors.Is(%v, %v) = false", err, tt.sentinel)
@@ -114,14 +114,14 @@ func TestCheckResponseShapes(t *testing.T) {
 
 func TestCheckResponseSuccess(t *testing.T) {
 	for _, status := range []int{200, 201, 202, 204} {
-		if err := CheckResponse(response(status, "{}", nil)); err != nil {
+		if err := CheckResponse(newTestResponse(status, "{}", nil)); err != nil {
 			t.Errorf("status %d: %v", status, err)
 		}
 	}
 }
 
 func TestErrorMessage(t *testing.T) {
-	err := CheckResponse(response(http.StatusNotFound, `{"correlationId":"c-1","message":"Profile not found","details":"No profile with id 42"}`, nil))
+	err := CheckResponse(newTestResponse(http.StatusNotFound, `{"correlationId":"c-1","message":"Profile not found","details":"No profile with id 42"}`, nil))
 
 	want := "creditsafe: GET https://connect.sandbox.creditsafe.com/v1/compliance/kyc-protect/profiles/42: 404 Not Found: Profile not found: No profile with id 42 (correlation ID c-1)"
 	if err.Error() != want {
@@ -130,7 +130,7 @@ func TestErrorMessage(t *testing.T) {
 }
 
 func TestErrorMatchesOnlyItsSentinel(t *testing.T) {
-	err := CheckResponse(response(http.StatusNotFound, `{}`, nil))
+	err := CheckResponse(newTestResponse(http.StatusNotFound, `{}`, nil))
 
 	for _, other := range []error{ErrBadRequest, ErrUnauthorized, ErrForbidden, ErrConflict, ErrRateLimited, ErrServer, ErrUnexpected, ErrAuthentication} {
 		if errors.Is(err, other) {
@@ -140,7 +140,7 @@ func TestErrorMatchesOnlyItsSentinel(t *testing.T) {
 }
 
 func TestRetryAfter(t *testing.T) {
-	err := CheckResponse(response(http.StatusTooManyRequests, `{}`, http.Header{"Retry-After": {"30"}}))
+	err := CheckResponse(newTestResponse(http.StatusTooManyRequests, `{}`, http.Header{"Retry-After": {"30"}}))
 
 	var apiErr *APIError
 	if !errors.As(err, &apiErr) || !errors.Is(err, ErrRateLimited) || apiErr.RetryAfter != 30*time.Second {
@@ -159,13 +159,13 @@ func TestRetryAfter(t *testing.T) {
 
 func TestJWTExpiry(t *testing.T) {
 	exp := time.Unix(1595419809, 0)
-	if got := jwtExpiry(makeJWT(t, "x", exp)); !got.Equal(exp) {
-		t.Errorf("jwtExpiry = %v, want %v", got, exp)
+	if got := parseJWTExpiry(makeJWT(t, "x", exp)); !got.Equal(exp) {
+		t.Errorf("parseJWTExpiry = %v, want %v", got, exp)
 	}
 
 	for _, bad := range []string{"", "opaque-token", "a.!!!.c", "a.e30.c"} {
-		if got := jwtExpiry(bad); !got.IsZero() {
-			t.Errorf("jwtExpiry(%q) = %v, want zero", bad, got)
+		if got := parseJWTExpiry(bad); !got.IsZero() {
+			t.Errorf("parseJWTExpiry(%q) = %v, want zero", bad, got)
 		}
 	}
 }

@@ -155,7 +155,7 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 		req.URL = c.resolve(req.URL)
 	}
 
-	token, err := c.auth.validToken(ctx)
+	token, err := c.auth.ensureToken(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 		return resp, nil
 	}
 
-	retry, err := replayable(req)
+	retry, err := cloneForReplay(req)
 	if err != nil || retry == nil {
 		return resp, nil //nolint:nilerr // can't resend; the caller gets the 401
 	}
@@ -281,9 +281,9 @@ func (c *Client) send(req *http.Request, token string) (*http.Response, error) {
 	return resp, nil
 }
 
-// replayable returns a copy of req with a fresh body, or nil if its body
+// cloneForReplay returns a copy of req with a fresh body, or nil if its body
 // can't be read again.
-func replayable(req *http.Request) (*http.Request, error) {
+func cloneForReplay(req *http.Request) (*http.Request, error) {
 	if req.Body == nil || req.Body == http.NoBody {
 		return req.Clone(req.Context()), nil
 	}
