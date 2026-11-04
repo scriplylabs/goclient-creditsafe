@@ -16,6 +16,7 @@ import (
 
 	"github.com/oapi-codegen/runtime"
 	openapi_types "github.com/oapi-codegen/runtime/types"
+	"github.com/scriplylabs/goclient-creditsafe/internal/apicall"
 )
 
 // Defines values for CreditsafeGlobalDataCompanyStatus.
@@ -27054,7 +27055,7 @@ func (c *rawClient) applyEditors(ctx context.Context, req *http.Request, additio
 // Return All Async AML Jobs
 func (c *Client) ListAsyncAMLJobs(ctx context.Context, params *ListAsyncAMLJobsParams, reqEditors ...RequestEditorFn) (*GetKycProtectAsyncAmlJobResponse, error) {
 	resp, err := c.raw.ListAsyncAMLJobs(ctx, params, reqEditors...)
-	return decode[GetKycProtectAsyncAmlJobResponse]("ListAsyncAMLJobs", resp, err)
+	return apicall.Decode[GetKycProtectAsyncAmlJobResponse]("ListAsyncAMLJobs", resp, err)
 }
 
 // GetAsyncAMLJob sends GET /compliance/kyc-protect/asyncAmlJobs/{jobId}.
@@ -27062,7 +27063,7 @@ func (c *Client) ListAsyncAMLJobs(ctx context.Context, params *ListAsyncAMLJobsP
 // Return Async AML Jobs By Id
 func (c *Client) GetAsyncAMLJob(ctx context.Context, jobId openapi_types.UUID, params *GetAsyncAMLJobParams, reqEditors ...RequestEditorFn) (*GetKycProtectAsyncAmlJobItemResponse, error) {
 	resp, err := c.raw.GetAsyncAMLJob(ctx, jobId, params, reqEditors...)
-	return decode[GetKycProtectAsyncAmlJobItemResponse]("GetAsyncAMLJob", resp, err)
+	return apicall.Decode[GetKycProtectAsyncAmlJobItemResponse]("GetAsyncAMLJob", resp, err)
 }
 
 // GetAsyncAMLJobCriteria sends GET /compliance/kyc-protect/asyncAmlJobs/{jobId}/criteria.
@@ -27070,7 +27071,7 @@ func (c *Client) GetAsyncAMLJob(ctx context.Context, jobId openapi_types.UUID, p
 // Return Async Job Criteria By Id
 func (c *Client) GetAsyncAMLJobCriteria(ctx context.Context, jobId openapi_types.UUID, params *GetAsyncAMLJobCriteriaParams, reqEditors ...RequestEditorFn) (*GetKycProtectAsyncAmlJobCriteriaResponse, error) {
 	resp, err := c.raw.GetAsyncAMLJobCriteria(ctx, jobId, params, reqEditors...)
-	return decode[GetKycProtectAsyncAmlJobCriteriaResponse]("GetAsyncAMLJobCriteria", resp, err)
+	return apicall.Decode[GetKycProtectAsyncAmlJobCriteriaResponse]("GetAsyncAMLJobCriteria", resp, err)
 }
 
 // ListAudits sends GET /compliance/kyc-protect/audits.
@@ -27078,7 +27079,7 @@ func (c *Client) GetAsyncAMLJobCriteria(ctx context.Context, jobId openapi_types
 // Return Audit Trail
 func (c *Client) ListAudits(ctx context.Context, params *ListAuditsParams, reqEditors ...RequestEditorFn) (*GetAuditsResponse, error) {
 	resp, err := c.raw.ListAudits(ctx, params, reqEditors...)
-	return decode[GetAuditsResponse]("ListAudits", resp, err)
+	return apicall.Decode[GetAuditsResponse]("ListAudits", resp, err)
 }
 
 // ListAuthorizationAudits sends GET /compliance/kyc-protect/authorization/audits.
@@ -27086,7 +27087,7 @@ func (c *Client) ListAudits(ctx context.Context, params *ListAuditsParams, reqEd
 // Return Audits
 func (c *Client) ListAuthorizationAudits(ctx context.Context, params *ListAuthorizationAuditsParams, reqEditors ...RequestEditorFn) (*AuthorizationAuditsResponse, error) {
 	resp, err := c.raw.ListAuthorizationAudits(ctx, params, reqEditors...)
-	return decode[AuthorizationAuditsResponse]("ListAuthorizationAudits", resp, err)
+	return apicall.Decode[AuthorizationAuditsResponse]("ListAuthorizationAudits", resp, err)
 }
 
 // ListPermissions sends GET /compliance/kyc-protect/authorization/lookUp/permissions.
@@ -27100,7 +27101,7 @@ func (c *Client) ListPermissions(ctx context.Context, params *ListPermissionsPar
 	Data *[]AuthorizationPermissionDto `json:"data,omitempty"`
 }, error) {
 	resp, err := c.raw.ListPermissions(ctx, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -27120,7 +27121,7 @@ func (c *Client) ListRoles(ctx context.Context, reqEditors ...RequestEditorFn) (
 	Data *[]AuthorizationRoleResponse `json:"data,omitempty"`
 }, error) {
 	resp, err := c.raw.ListRoles(ctx, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -27134,7 +27135,7 @@ func (c *Client) ListRoles(ctx context.Context, reqEditors ...RequestEditorFn) (
 // Return Roles Permissions
 func (c *Client) ListRolePermissions(ctx context.Context, params *ListRolePermissionsParams, reqEditors ...RequestEditorFn) (*AuthorizationRolesPermissionsCollection, error) {
 	resp, err := c.raw.ListRolePermissions(ctx, params, reqEditors...)
-	return decode[AuthorizationRolesPermissionsCollection]("ListRolePermissions", resp, err)
+	return apicall.Decode[AuthorizationRolesPermissionsCollection]("ListRolePermissions", resp, err)
 }
 
 // UpdateAllRolePermissions sends PATCH /compliance/kyc-protect/authorization/roles/permissions.
@@ -27142,7 +27143,7 @@ func (c *Client) ListRolePermissions(ctx context.Context, params *ListRolePermis
 // Modify Roles Permissions
 func (c *Client) UpdateAllRolePermissions(ctx context.Context, params *UpdateAllRolePermissionsParams, body UpdateAllRolePermissionsJSONRequestBody, reqEditors ...RequestEditorFn) (*AuthorizationBatchResponse, error) {
 	resp, err := c.raw.UpdateAllRolePermissions(ctx, params, body, reqEditors...)
-	return decode[AuthorizationBatchResponse]("UpdateAllRolePermissions", resp, err)
+	return apicall.Decode[AuthorizationBatchResponse]("UpdateAllRolePermissions", resp, err)
 }
 
 // ReplaceAllRolePermissions sends PUT /compliance/kyc-protect/authorization/roles/permissions.
@@ -27150,7 +27151,7 @@ func (c *Client) UpdateAllRolePermissions(ctx context.Context, params *UpdateAll
 // Update Roles Permissions
 func (c *Client) ReplaceAllRolePermissions(ctx context.Context, params *ReplaceAllRolePermissionsParams, body ReplaceAllRolePermissionsJSONRequestBody, reqEditors ...RequestEditorFn) (*AuthorizationBatchResponse, error) {
 	resp, err := c.raw.ReplaceAllRolePermissions(ctx, params, body, reqEditors...)
-	return decode[AuthorizationBatchResponse]("ReplaceAllRolePermissions", resp, err)
+	return apicall.Decode[AuthorizationBatchResponse]("ReplaceAllRolePermissions", resp, err)
 }
 
 // GetRolePermissions sends GET /compliance/kyc-protect/authorization/roles/{roleId}/permissions.
@@ -27179,7 +27180,7 @@ func (c *Client) GetRolePermissions(ctx context.Context, roleId int32, params *G
 	Permissions *[]AuthorizationPermission `json:"permissions,omitempty"`
 }, error) {
 	resp, err := c.raw.GetRolePermissions(ctx, roleId, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -27208,7 +27209,7 @@ func (c *Client) GetRolePermissions(ctx context.Context, roleId int32, params *G
 // Update Role Permissions By Role Id
 func (c *Client) ReplaceRolePermissions(ctx context.Context, roleId int32, params *ReplaceRolePermissionsParams, body ReplaceRolePermissionsJSONRequestBody, reqEditors ...RequestEditorFn) (*AuthorizationRolesPermissionsResponse, error) {
 	resp, err := c.raw.ReplaceRolePermissions(ctx, roleId, params, body, reqEditors...)
-	return decode[AuthorizationRolesPermissionsResponse]("ReplaceRolePermissions", resp, err)
+	return apicall.Decode[AuthorizationRolesPermissionsResponse]("ReplaceRolePermissions", resp, err)
 }
 
 // GetMyRolePermissions sends GET /compliance/kyc-protect/authorization/users/me/roles/permissions.
@@ -27216,7 +27217,7 @@ func (c *Client) ReplaceRolePermissions(ctx context.Context, roleId int32, param
 // Return Users Me Roles Permissions
 func (c *Client) GetMyRolePermissions(ctx context.Context, params *GetMyRolePermissionsParams, reqEditors ...RequestEditorFn) (*AuthorizationUserRolePermissions, error) {
 	resp, err := c.raw.GetMyRolePermissions(ctx, params, reqEditors...)
-	return decode[AuthorizationUserRolePermissions]("GetMyRolePermissions", resp, err)
+	return apicall.Decode[AuthorizationUserRolePermissions]("GetMyRolePermissions", resp, err)
 }
 
 // ListAllUserRoles sends GET /compliance/kyc-protect/authorization/users/roles.
@@ -27224,7 +27225,7 @@ func (c *Client) GetMyRolePermissions(ctx context.Context, params *GetMyRolePerm
 // Return Users Roles
 func (c *Client) ListAllUserRoles(ctx context.Context, params *ListAllUserRolesParams, reqEditors ...RequestEditorFn) (*AuthorizationUserTeamRolesCollection, error) {
 	resp, err := c.raw.ListAllUserRoles(ctx, params, reqEditors...)
-	return decode[AuthorizationUserTeamRolesCollection]("ListAllUserRoles", resp, err)
+	return apicall.Decode[AuthorizationUserTeamRolesCollection]("ListAllUserRoles", resp, err)
 }
 
 // UpdateUserRoles sends PUT /compliance/kyc-protect/authorization/users/roles.
@@ -27232,7 +27233,7 @@ func (c *Client) ListAllUserRoles(ctx context.Context, params *ListAllUserRolesP
 // Update Users Roles
 func (c *Client) UpdateUserRoles(ctx context.Context, params *UpdateUserRolesParams, body UpdateUserRolesJSONRequestBody, reqEditors ...RequestEditorFn) (*AuthorizationUpdateUserRolesResponse, error) {
 	resp, err := c.raw.UpdateUserRoles(ctx, params, body, reqEditors...)
-	return decode[AuthorizationUpdateUserRolesResponse]("UpdateUserRoles", resp, err)
+	return apicall.Decode[AuthorizationUpdateUserRolesResponse]("UpdateUserRoles", resp, err)
 }
 
 // DownloadUserRoles sends GET /compliance/kyc-protect/authorization/users/roles/download.
@@ -27240,7 +27241,7 @@ func (c *Client) UpdateUserRoles(ctx context.Context, params *UpdateUserRolesPar
 // Return Users Roles Download
 func (c *Client) DownloadUserRoles(ctx context.Context, reqEditors ...RequestEditorFn) (*AuthorizationAttachmentLink, error) {
 	resp, err := c.raw.DownloadUserRoles(ctx, reqEditors...)
-	return decode[AuthorizationAttachmentLink]("DownloadUserRoles", resp, err)
+	return apicall.Decode[AuthorizationAttachmentLink]("DownloadUserRoles", resp, err)
 }
 
 // ListUserRoles sends GET /compliance/kyc-protect/authorization/users/{userId}/roles.
@@ -27248,7 +27249,7 @@ func (c *Client) DownloadUserRoles(ctx context.Context, reqEditors ...RequestEdi
 // Return Users Roles By User Id
 func (c *Client) ListUserRoles(ctx context.Context, userId int32, params *ListUserRolesParams, reqEditors ...RequestEditorFn) (*AuthorizationUserRolesCollection, error) {
 	resp, err := c.raw.ListUserRoles(ctx, userId, params, reqEditors...)
-	return decode[AuthorizationUserRolesCollection]("ListUserRoles", resp, err)
+	return apicall.Decode[AuthorizationUserRolesCollection]("ListUserRoles", resp, err)
 }
 
 // ListBatchUploads sends GET /compliance/kyc-protect/batchUploads.
@@ -27256,7 +27257,7 @@ func (c *Client) ListUserRoles(ctx context.Context, userId int32, params *ListUs
 // Return A List Of Requested Uploads
 func (c *Client) ListBatchUploads(ctx context.Context, params *ListBatchUploadsParams, reqEditors ...RequestEditorFn) (*GetKycProtectBatchUploadsByUploadsResponse, error) {
 	resp, err := c.raw.ListBatchUploads(ctx, params, reqEditors...)
-	return decode[GetKycProtectBatchUploadsByUploadsResponse]("ListBatchUploads", resp, err)
+	return apicall.Decode[GetKycProtectBatchUploadsByUploadsResponse]("ListBatchUploads", resp, err)
 }
 
 // CreateBatchUpload sends POST /compliance/kyc-protect/batchUploads with body, as is, under contentType
@@ -27265,7 +27266,7 @@ func (c *Client) ListBatchUploads(ctx context.Context, params *ListBatchUploadsP
 // Request Batch Upload
 func (c *Client) CreateBatchUpload(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GetKycProtectBatchUploadsByUploadIdItemResponse, error) {
 	resp, err := c.raw.CreateBatchUploadWithBody(ctx, contentType, body, reqEditors...)
-	return decode[GetKycProtectBatchUploadsByUploadIdItemResponse]("CreateBatchUpload", resp, err)
+	return apicall.Decode[GetKycProtectBatchUploadsByUploadIdItemResponse]("CreateBatchUpload", resp, err)
 }
 
 // GetBatchUploadTemplate sends GET /compliance/kyc-protect/batchUploads/template.
@@ -27273,7 +27274,7 @@ func (c *Client) CreateBatchUpload(ctx context.Context, contentType string, body
 // Return Template For Batch Upload
 func (c *Client) GetBatchUploadTemplate(ctx context.Context, reqEditors ...RequestEditorFn) (*GetBatchUploadsTemplateResponse, error) {
 	resp, err := c.raw.GetBatchUploadTemplate(ctx, reqEditors...)
-	return decode[GetBatchUploadsTemplateResponse]("GetBatchUploadTemplate", resp, err)
+	return apicall.Decode[GetBatchUploadsTemplateResponse]("GetBatchUploadTemplate", resp, err)
 }
 
 // GetBatchUpload sends GET /compliance/kyc-protect/batchUploads/{uploadId}.
@@ -27281,7 +27282,7 @@ func (c *Client) GetBatchUploadTemplate(ctx context.Context, reqEditors ...Reque
 // Return Batch Upload File Details
 func (c *Client) GetBatchUpload(ctx context.Context, uploadId int32, reqEditors ...RequestEditorFn) (*GetKycProtectBatchUploadsByUploadIdItemResponse, error) {
 	resp, err := c.raw.GetBatchUpload(ctx, uploadId, reqEditors...)
-	return decode[GetKycProtectBatchUploadsByUploadIdItemResponse]("GetBatchUpload", resp, err)
+	return apicall.Decode[GetKycProtectBatchUploadsByUploadIdItemResponse]("GetBatchUpload", resp, err)
 }
 
 // DownloadBatchUploadErrors sends GET /compliance/kyc-protect/batchUploads/{uploadId}/errors/download.
@@ -27289,7 +27290,7 @@ func (c *Client) GetBatchUpload(ctx context.Context, uploadId int32, reqEditors 
 // Download Batch Upload Error File
 func (c *Client) DownloadBatchUploadErrors(ctx context.Context, uploadId openapi_types.UUID, reqEditors ...RequestEditorFn) (*GetBatchUploadsDownloadErrorsByUploadIdResponse, error) {
 	resp, err := c.raw.DownloadBatchUploadErrors(ctx, uploadId, reqEditors...)
-	return decode[GetBatchUploadsDownloadErrorsByUploadIdResponse]("DownloadBatchUploadErrors", resp, err)
+	return apicall.Decode[GetBatchUploadsDownloadErrorsByUploadIdResponse]("DownloadBatchUploadErrors", resp, err)
 }
 
 // RetryBatchUpload sends PUT /compliance/kyc-protect/batchUploads/{uploadId}/retry.
@@ -27297,7 +27298,7 @@ func (c *Client) DownloadBatchUploadErrors(ctx context.Context, uploadId openapi
 // Retry Previous Upload
 func (c *Client) RetryBatchUpload(ctx context.Context, uploadId openapi_types.UUID, reqEditors ...RequestEditorFn) (*PutBatchUploadsRetryByIdResponse, error) {
 	resp, err := c.raw.RetryBatchUpload(ctx, uploadId, reqEditors...)
-	return decode[PutBatchUploadsRetryByIdResponse]("RetryBatchUpload", resp, err)
+	return apicall.Decode[PutBatchUploadsRetryByIdResponse]("RetryBatchUpload", resp, err)
 }
 
 // GetComplianceAlerts sends GET /compliance/kyc-protect/complianceAlerts/{connectId}.
@@ -27305,7 +27306,7 @@ func (c *Client) RetryBatchUpload(ctx context.Context, uploadId openapi_types.UU
 // Return Compliance Alerts
 func (c *Client) GetComplianceAlerts(ctx context.Context, connectId string, reqEditors ...RequestEditorFn) (*GetKycProtectAlertResponse, error) {
 	resp, err := c.raw.GetComplianceAlerts(ctx, connectId, reqEditors...)
-	return decode[GetKycProtectAlertResponse]("GetComplianceAlerts", resp, err)
+	return apicall.Decode[GetKycProtectAlertResponse]("GetComplianceAlerts", resp, err)
 }
 
 // DeleteMonitoredProfiles sends DELETE /compliance/kyc-protect/kycMonitoring/profiles.
@@ -27313,7 +27314,7 @@ func (c *Client) GetComplianceAlerts(ctx context.Context, connectId string, reqE
 // Delete Profiles From Monitoring
 func (c *Client) DeleteMonitoredProfiles(ctx context.Context, body DeleteMonitoredProfilesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteKYCMonitoringProfilesResponse, error) {
 	resp, err := c.raw.DeleteMonitoredProfiles(ctx, body, reqEditors...)
-	return decode[DeleteKYCMonitoringProfilesResponse]("DeleteMonitoredProfiles", resp, err)
+	return apicall.Decode[DeleteKYCMonitoringProfilesResponse]("DeleteMonitoredProfiles", resp, err)
 }
 
 // BulkAddMonitoredProfiles sends POST /compliance/kyc-protect/kycMonitoring/profiles/bulk.
@@ -27321,7 +27322,7 @@ func (c *Client) DeleteMonitoredProfiles(ctx context.Context, body DeleteMonitor
 // Add Profiles To Monitoring
 func (c *Client) BulkAddMonitoredProfiles(ctx context.Context, body BulkAddMonitoredProfilesJSONRequestBody, reqEditors ...RequestEditorFn) (*PostKYCMonitoringProfilesBulkResponse, error) {
 	resp, err := c.raw.BulkAddMonitoredProfiles(ctx, body, reqEditors...)
-	return decode[PostKYCMonitoringProfilesBulkResponse]("BulkAddMonitoredProfiles", resp, err)
+	return apicall.Decode[PostKYCMonitoringProfilesBulkResponse]("BulkAddMonitoredProfiles", resp, err)
 }
 
 // ListMonitoringAlerts sends GET /compliance/kyc-protect/kycMonitoring/profiles/{profileId}/alerts.
@@ -27334,7 +27335,7 @@ func (c *Client) ListMonitoringAlerts(ctx context.Context, profileId openapi_typ
 	TotalSize     *int64                           `json:"totalSize,omitempty"`
 }, error) {
 	resp, err := c.raw.ListMonitoringAlerts(ctx, profileId, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                          `json:"correlationId,omitempty"`
 		Items         *[]KycMonitoringKycAlertResponse `json:"items,omitempty"`
@@ -27347,7 +27348,7 @@ func (c *Client) ListMonitoringAlerts(ctx context.Context, profileId openapi_typ
 // Return Alert By Alert Id And ProfileId
 func (c *Client) GetMonitoringAlert(ctx context.Context, profileId openapi_types.UUID, alertId openapi_types.UUID, reqEditors ...RequestEditorFn) (*KycMonitoringKycAlertResponse, error) {
 	resp, err := c.raw.GetMonitoringAlert(ctx, profileId, alertId, reqEditors...)
-	return decode[KycMonitoringKycAlertResponse]("GetMonitoringAlert", resp, err)
+	return apicall.Decode[KycMonitoringKycAlertResponse]("GetMonitoringAlert", resp, err)
 }
 
 // UpdateMonitoringAlert sends PUT /compliance/kyc-protect/kycMonitoring/profiles/{profileId}/alerts/{alertId}.
@@ -27355,7 +27356,7 @@ func (c *Client) GetMonitoringAlert(ctx context.Context, profileId openapi_types
 // Update Status of Alert By Profile Id And Alert Id
 func (c *Client) UpdateMonitoringAlert(ctx context.Context, profileId openapi_types.UUID, alertId openapi_types.UUID, body UpdateMonitoringAlertJSONRequestBody, reqEditors ...RequestEditorFn) (*KycMonitoringKycAlertResponse, error) {
 	resp, err := c.raw.UpdateMonitoringAlert(ctx, profileId, alertId, body, reqEditors...)
-	return decode[KycMonitoringKycAlertResponse]("UpdateMonitoringAlert", resp, err)
+	return apicall.Decode[KycMonitoringKycAlertResponse]("UpdateMonitoringAlert", resp, err)
 }
 
 // ListCountryCodes sends GET /compliance/kyc-protect/lookup/countryCodes.
@@ -27363,7 +27364,7 @@ func (c *Client) UpdateMonitoringAlert(ctx context.Context, profileId openapi_ty
 // Return Accepted Country Codes
 func (c *Client) ListCountryCodes(ctx context.Context, reqEditors ...RequestEditorFn) ([]string, error) {
 	resp, err := c.raw.ListCountryCodes(ctx, reqEditors...)
-	return decodeValue[[]string]("ListCountryCodes", resp, err)
+	return apicall.DecodeValue[[]string]("ListCountryCodes", resp, err)
 }
 
 // ListCurrencyCodes sends GET /compliance/kyc-protect/lookup/currencyCodes.
@@ -27371,7 +27372,7 @@ func (c *Client) ListCountryCodes(ctx context.Context, reqEditors ...RequestEdit
 // Return Accepted Currency Codes
 func (c *Client) ListCurrencyCodes(ctx context.Context, reqEditors ...RequestEditorFn) ([]string, error) {
 	resp, err := c.raw.ListCurrencyCodes(ctx, reqEditors...)
-	return decodeValue[[]string]("ListCurrencyCodes", resp, err)
+	return apicall.DecodeValue[[]string]("ListCurrencyCodes", resp, err)
 }
 
 // ListMonitoringCountryCodes sends GET /compliance/kyc-protect/lookup/kycMonitoring/countryCodes.
@@ -27379,7 +27380,7 @@ func (c *Client) ListCurrencyCodes(ctx context.Context, reqEditors ...RequestEdi
 // Return Available Country Codes
 func (c *Client) ListMonitoringCountryCodes(ctx context.Context, reqEditors ...RequestEditorFn) ([]string, error) {
 	resp, err := c.raw.ListMonitoringCountryCodes(ctx, reqEditors...)
-	return decodeValue[[]string]("ListMonitoringCountryCodes", resp, err)
+	return apicall.DecodeValue[[]string]("ListMonitoringCountryCodes", resp, err)
 }
 
 // ListSanctionBodies sends GET /compliance/kyc-protect/lookup/sanctionBodies.
@@ -27387,7 +27388,7 @@ func (c *Client) ListMonitoringCountryCodes(ctx context.Context, reqEditors ...R
 // Return Sanction Body Details
 func (c *Client) ListSanctionBodies(ctx context.Context, params *ListSanctionBodiesParams, reqEditors ...RequestEditorFn) (*KycProtectGetSanctionBodyDetailsResponse, error) {
 	resp, err := c.raw.ListSanctionBodies(ctx, params, reqEditors...)
-	return decode[KycProtectGetSanctionBodyDetailsResponse]("ListSanctionBodies", resp, err)
+	return apicall.Decode[KycProtectGetSanctionBodyDetailsResponse]("ListSanctionBodies", resp, err)
 }
 
 // DeleteProfiles sends DELETE /compliance/kyc-protect/profiles.
@@ -27395,7 +27396,7 @@ func (c *Client) ListSanctionBodies(ctx context.Context, params *ListSanctionBod
 // Delete All Profiles
 func (c *Client) DeleteProfiles(ctx context.Context, body DeleteProfilesJSONRequestBody, reqEditors ...RequestEditorFn) (*bool, error) {
 	resp, err := c.raw.DeleteProfiles(ctx, body, reqEditors...)
-	return decode[bool]("DeleteProfiles", resp, err)
+	return apicall.Decode[bool]("DeleteProfiles", resp, err)
 }
 
 // ListProfiles sends GET /compliance/kyc-protect/profiles.
@@ -27403,7 +27404,7 @@ func (c *Client) DeleteProfiles(ctx context.Context, body DeleteProfilesJSONRequ
 // Return Created Profiles
 func (c *Client) ListProfiles(ctx context.Context, params *ListProfilesParams, reqEditors ...RequestEditorFn) (*GetKYCProfiles, error) {
 	resp, err := c.raw.ListProfiles(ctx, params, reqEditors...)
-	return decode[GetKYCProfiles]("ListProfiles", resp, err)
+	return apicall.Decode[GetKYCProfiles]("ListProfiles", resp, err)
 }
 
 // CreateProfile sends POST /compliance/kyc-protect/profiles.
@@ -27411,7 +27412,7 @@ func (c *Client) ListProfiles(ctx context.Context, params *ListProfilesParams, r
 // Create Profile
 func (c *Client) CreateProfile(ctx context.Context, body CreateProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*KycProtectProfileCreatedResponse, error) {
 	resp, err := c.raw.CreateProfile(ctx, body, reqEditors...)
-	return decode[KycProtectProfileCreatedResponse]("CreateProfile", resp, err)
+	return apicall.Decode[KycProtectProfileCreatedResponse]("CreateProfile", resp, err)
 }
 
 // GetProfileAlertMetrics sends GET /compliance/kyc-protect/profiles/alerts/metrics.
@@ -27424,7 +27425,7 @@ func (c *Client) GetProfileAlertMetrics(ctx context.Context, params *GetProfileA
 	TotalSize     *int32                                    `json:"totalSize,omitempty"`
 }, error) {
 	resp, err := c.raw.GetProfileAlertMetrics(ctx, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                                   `json:"correlationId,omitempty"`
 		Items         *[]KYCProtectProfileAlertsMetricsResponse `json:"items,omitempty"`
@@ -27437,7 +27438,7 @@ func (c *Client) GetProfileAlertMetrics(ctx context.Context, params *GetProfileA
 // Assign Profile To User
 func (c *Client) AssignProfiles(ctx context.Context, params *AssignProfilesParams, reqEditors ...RequestEditorFn) (*PutKYCProfileAssign, error) {
 	resp, err := c.raw.AssignProfiles(ctx, params, reqEditors...)
-	return decode[PutKYCProfileAssign]("AssignProfiles", resp, err)
+	return apicall.Decode[PutKYCProfileAssign]("AssignProfiles", resp, err)
 }
 
 // BulkAssignProfiles sends PUT /compliance/kyc-protect/profiles/assign/bulk.
@@ -27445,7 +27446,7 @@ func (c *Client) AssignProfiles(ctx context.Context, params *AssignProfilesParam
 // Assigns A List Of Profiles To User
 func (c *Client) BulkAssignProfiles(ctx context.Context, body BulkAssignProfilesJSONRequestBody, reqEditors ...RequestEditorFn) ([]KycProtectProfileAssignBulkResponse, error) {
 	resp, err := c.raw.BulkAssignProfiles(ctx, body, reqEditors...)
-	return decodeValue[[]KycProtectProfileAssignBulkResponse]("BulkAssignProfiles", resp, err)
+	return apicall.DecodeValue[[]KycProtectProfileAssignBulkResponse]("BulkAssignProfiles", resp, err)
 }
 
 // ImportBusinessProfiles sends POST /compliance/kyc-protect/profiles/businesses/import.
@@ -27461,7 +27462,7 @@ func (c *Client) ImportBusinessProfiles(ctx context.Context, params *ImportBusin
 	Report *CreditsafeGlobalDataReportsCompanyReportResponse `json:"report,omitempty"`
 }, error) {
 	resp, err := c.raw.ImportBusinessProfiles(ctx, params, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		CorrelationId *string `json:"correlationId,omitempty"`
 		KycResponse   *struct {
 			// Id A Unique Id that will be known as the `Profile Id`
@@ -27477,7 +27478,7 @@ func (c *Client) ImportBusinessProfiles(ctx context.Context, params *ImportBusin
 // Return Profile Document Types
 func (c *Client) ListProfileDocumentTypes(ctx context.Context, params *ListProfileDocumentTypesParams, reqEditors ...RequestEditorFn) ([]string, error) {
 	resp, err := c.raw.ListProfileDocumentTypes(ctx, params, reqEditors...)
-	return decodeValue[[]string]("ListProfileDocumentTypes", resp, err)
+	return apicall.DecodeValue[[]string]("ListProfileDocumentTypes", resp, err)
 }
 
 // ListProfileTypes sends GET /compliance/kyc-protect/profiles/types.
@@ -27485,7 +27486,7 @@ func (c *Client) ListProfileDocumentTypes(ctx context.Context, params *ListProfi
 // Return Profile Types
 func (c *Client) ListProfileTypes(ctx context.Context, reqEditors ...RequestEditorFn) (*GetKYCProfileTypes, error) {
 	resp, err := c.raw.ListProfileTypes(ctx, reqEditors...)
-	return decode[GetKYCProfileTypes]("ListProfileTypes", resp, err)
+	return apicall.Decode[GetKYCProfileTypes]("ListProfileTypes", resp, err)
 }
 
 // DeleteProfile sends DELETE /compliance/kyc-protect/profiles/{profileId}.
@@ -27493,7 +27494,7 @@ func (c *Client) ListProfileTypes(ctx context.Context, reqEditors ...RequestEdit
 // Delete Profile By Profile Id
 func (c *Client) DeleteProfile(ctx context.Context, profileId string, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.DeleteProfile(ctx, profileId, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // GetProfile sends GET /compliance/kyc-protect/profiles/{profileId}.
@@ -27501,7 +27502,7 @@ func (c *Client) DeleteProfile(ctx context.Context, profileId string, reqEditors
 // Return Profile By Profile Id
 func (c *Client) GetProfile(ctx context.Context, profileId string, reqEditors ...RequestEditorFn) (*GetKYCProfileByProfileId, error) {
 	resp, err := c.raw.GetProfile(ctx, profileId, reqEditors...)
-	return decode[GetKYCProfileByProfileId]("GetProfile", resp, err)
+	return apicall.Decode[GetKYCProfileByProfileId]("GetProfile", resp, err)
 }
 
 // UpdateProfile sends PUT /compliance/kyc-protect/profiles/{profileId}.
@@ -27509,7 +27510,7 @@ func (c *Client) GetProfile(ctx context.Context, profileId string, reqEditors ..
 // Update Profile By Profile Id
 func (c *Client) UpdateProfile(ctx context.Context, profileId string, body UpdateProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateKYCProfileByProfileId, error) {
 	resp, err := c.raw.UpdateProfile(ctx, profileId, body, reqEditors...)
-	return decode[UpdateKYCProfileByProfileId]("UpdateProfile", resp, err)
+	return apicall.Decode[UpdateKYCProfileByProfileId]("UpdateProfile", resp, err)
 }
 
 // ListProfileAMLAlerts sends GET /compliance/kyc-protect/profiles/{profileId}/amlAlerts.
@@ -27522,7 +27523,7 @@ func (c *Client) ListProfileAMLAlerts(ctx context.Context, profileId openapi_typ
 	TotalSize     *int32                           `json:"totalSize,omitempty"`
 }, error) {
 	resp, err := c.raw.ListProfileAMLAlerts(ctx, profileId, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                          `json:"correlationId,omitempty"`
 		Items         *[]KYCProtectScheduleHitResponse `json:"items,omitempty"`
@@ -27540,7 +27541,7 @@ func (c *Client) ListProfileAttachments(ctx context.Context, profileId openapi_t
 	TotalSize     *int32                                    `json:"totalSize,omitempty"`
 }, error) {
 	resp, err := c.raw.ListProfileAttachments(ctx, profileId, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                                   `json:"correlationId,omitempty"`
 		Items         *[]KycProtectProfileGetAttachmentResponse `json:"items,omitempty"`
@@ -27554,7 +27555,7 @@ func (c *Client) ListProfileAttachments(ctx context.Context, profileId openapi_t
 // Add An Attachment To The Given Profile
 func (c *Client) CreateProfileAttachment(ctx context.Context, profileId openapi_types.UUID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*KycProtectProfileAttachmentResponse, error) {
 	resp, err := c.raw.CreateProfileAttachmentWithBody(ctx, profileId, contentType, body, reqEditors...)
-	return decode[KycProtectProfileAttachmentResponse]("CreateProfileAttachment", resp, err)
+	return apicall.Decode[KycProtectProfileAttachmentResponse]("CreateProfileAttachment", resp, err)
 }
 
 // DeleteProfileAttachment sends DELETE /compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}.
@@ -27562,7 +27563,7 @@ func (c *Client) CreateProfileAttachment(ctx context.Context, profileId openapi_
 // Delete Attachment By Profile And Attachment Id
 func (c *Client) DeleteProfileAttachment(ctx context.Context, profileId openapi_types.UUID, attachmentId openapi_types.UUID, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.DeleteProfileAttachment(ctx, profileId, attachmentId, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // GetProfileAttachment sends GET /compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}.
@@ -27570,7 +27571,7 @@ func (c *Client) DeleteProfileAttachment(ctx context.Context, profileId openapi_
 // Return A Profile Attachment By Profile And Attachment Id
 func (c *Client) GetProfileAttachment(ctx context.Context, profileId openapi_types.UUID, attachmentId openapi_types.UUID, reqEditors ...RequestEditorFn) (*GetKYCProfileAttachmentDetailsByAttachmentId, error) {
 	resp, err := c.raw.GetProfileAttachment(ctx, profileId, attachmentId, reqEditors...)
-	return decode[GetKYCProfileAttachmentDetailsByAttachmentId]("GetProfileAttachment", resp, err)
+	return apicall.Decode[GetKYCProfileAttachmentDetailsByAttachmentId]("GetProfileAttachment", resp, err)
 }
 
 // UpdateProfileAttachment sends PUT /compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}.
@@ -27578,7 +27579,7 @@ func (c *Client) GetProfileAttachment(ctx context.Context, profileId openapi_typ
 // Update Profile Attachment By Profile And Attachment Id
 func (c *Client) UpdateProfileAttachment(ctx context.Context, profileId openapi_types.UUID, attachmentId openapi_types.UUID, body UpdateProfileAttachmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateKYCAttachmentsByAttachmentId, error) {
 	resp, err := c.raw.UpdateProfileAttachment(ctx, profileId, attachmentId, body, reqEditors...)
-	return decode[UpdateKYCAttachmentsByAttachmentId]("UpdateProfileAttachment", resp, err)
+	return apicall.Decode[UpdateKYCAttachmentsByAttachmentId]("UpdateProfileAttachment", resp, err)
 }
 
 // DownloadProfileAttachment sends GET /compliance/kyc-protect/profiles/{profileId}/attachments/{attachmentId}/download.
@@ -27586,7 +27587,7 @@ func (c *Client) UpdateProfileAttachment(ctx context.Context, profileId openapi_
 // Download Profile Attachment By Profile And Attachment Id
 func (c *Client) DownloadProfileAttachment(ctx context.Context, profileId openapi_types.UUID, attachmentId openapi_types.UUID, reqEditors ...RequestEditorFn) (*DownloadAttachmentResponse, error) {
 	resp, err := c.raw.DownloadProfileAttachment(ctx, profileId, attachmentId, reqEditors...)
-	return decode[DownloadAttachmentResponse]("DownloadProfileAttachment", resp, err)
+	return apicall.Decode[DownloadAttachmentResponse]("DownloadProfileAttachment", resp, err)
 }
 
 // GetProfileDetails sends GET /compliance/kyc-protect/profiles/{profileId}/details.
@@ -27594,7 +27595,7 @@ func (c *Client) DownloadProfileAttachment(ctx context.Context, profileId openap
 // Return Profile Details
 func (c *Client) GetProfileDetails(ctx context.Context, profileId string, reqEditors ...RequestEditorFn) (*GetKYCProfileDetailsByProfileId, error) {
 	resp, err := c.raw.GetProfileDetails(ctx, profileId, reqEditors...)
-	return decode[GetKYCProfileDetailsByProfileId]("GetProfileDetails", resp, err)
+	return apicall.Decode[GetKYCProfileDetailsByProfileId]("GetProfileDetails", resp, err)
 }
 
 // UpdateProfileDetails sends PUT /compliance/kyc-protect/profiles/{profileId}/details.
@@ -27602,7 +27603,7 @@ func (c *Client) GetProfileDetails(ctx context.Context, profileId string, reqEdi
 // Update Profile Details
 func (c *Client) UpdateProfileDetails(ctx context.Context, profileId string, body UpdateProfileDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*PutKYCProfileDetailsByProfileId, error) {
 	resp, err := c.raw.UpdateProfileDetails(ctx, profileId, body, reqEditors...)
-	return decode[PutKYCProfileDetailsByProfileId]("UpdateProfileDetails", resp, err)
+	return apicall.Decode[PutKYCProfileDetailsByProfileId]("UpdateProfileDetails", resp, err)
 }
 
 // ListProfileAddresses sends GET /compliance/kyc-protect/profiles/{profileId}/details/addresses.
@@ -27610,7 +27611,7 @@ func (c *Client) UpdateProfileDetails(ctx context.Context, profileId string, bod
 // Return Lists Of Addresses
 func (c *Client) ListProfileAddresses(ctx context.Context, profileId openapi_types.UUID, reqEditors ...RequestEditorFn) ([]KycProtectProfileGetDetailsAddressResponse, error) {
 	resp, err := c.raw.ListProfileAddresses(ctx, profileId, reqEditors...)
-	return decodeValue[[]KycProtectProfileGetDetailsAddressResponse]("ListProfileAddresses", resp, err)
+	return apicall.DecodeValue[[]KycProtectProfileGetDetailsAddressResponse]("ListProfileAddresses", resp, err)
 }
 
 // CreateProfileAddress sends POST /compliance/kyc-protect/profiles/{profileId}/details/addresses.
@@ -27618,7 +27619,7 @@ func (c *Client) ListProfileAddresses(ctx context.Context, profileId openapi_typ
 // Create An Address For A Profile
 func (c *Client) CreateProfileAddress(ctx context.Context, profileId openapi_types.UUID, body CreateProfileAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*KycProtectProfileAddressResponse, error) {
 	resp, err := c.raw.CreateProfileAddress(ctx, profileId, body, reqEditors...)
-	return decode[KycProtectProfileAddressResponse]("CreateProfileAddress", resp, err)
+	return apicall.Decode[KycProtectProfileAddressResponse]("CreateProfileAddress", resp, err)
 }
 
 // DeleteProfileAddress sends DELETE /compliance/kyc-protect/profiles/{profileId}/details/addresses/{addressId}.
@@ -27626,7 +27627,7 @@ func (c *Client) CreateProfileAddress(ctx context.Context, profileId openapi_typ
 // Delete Profile Address Details By Profile Id And Address Id
 func (c *Client) DeleteProfileAddress(ctx context.Context, profileId openapi_types.UUID, addressId openapi_types.UUID, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.DeleteProfileAddress(ctx, profileId, addressId, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // GetProfileAddress sends GET /compliance/kyc-protect/profiles/{profileId}/details/addresses/{addressId}.
@@ -27634,7 +27635,7 @@ func (c *Client) DeleteProfileAddress(ctx context.Context, profileId openapi_typ
 // Return Profile Address Details By Profile And Address Id
 func (c *Client) GetProfileAddress(ctx context.Context, profileId openapi_types.UUID, addressId openapi_types.UUID, reqEditors ...RequestEditorFn) (*GetKYCAddressDetailsByTheGivenAddressIdForTheSuppliedProfileIdUser, error) {
 	resp, err := c.raw.GetProfileAddress(ctx, profileId, addressId, reqEditors...)
-	return decode[GetKYCAddressDetailsByTheGivenAddressIdForTheSuppliedProfileIdUser]("GetProfileAddress", resp, err)
+	return apicall.Decode[GetKYCAddressDetailsByTheGivenAddressIdForTheSuppliedProfileIdUser]("GetProfileAddress", resp, err)
 }
 
 // UpdateProfileAddress sends PUT /compliance/kyc-protect/profiles/{profileId}/details/addresses/{addressId}.
@@ -27642,7 +27643,7 @@ func (c *Client) GetProfileAddress(ctx context.Context, profileId openapi_types.
 // Update Profile Address Details By Profile Id And Address Id
 func (c *Client) UpdateProfileAddress(ctx context.Context, profileId openapi_types.UUID, addressId openapi_types.UUID, body UpdateProfileAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*PutKYCAddressDetailsByTheGivenAddressIdForTheSuppliedProfileIdUser, error) {
 	resp, err := c.raw.UpdateProfileAddress(ctx, profileId, addressId, body, reqEditors...)
-	return decode[PutKYCAddressDetailsByTheGivenAddressIdForTheSuppliedProfileIdUser]("UpdateProfileAddress", resp, err)
+	return apicall.Decode[PutKYCAddressDetailsByTheGivenAddressIdForTheSuppliedProfileIdUser]("UpdateProfileAddress", resp, err)
 }
 
 // ListProfileHits sends GET /compliance/kyc-protect/profiles/{profileId}/hits.
@@ -27650,7 +27651,7 @@ func (c *Client) UpdateProfileAddress(ctx context.Context, profileId openapi_typ
 // Return All Hits Of Searches Linked To A Profile
 func (c *Client) ListProfileHits(ctx context.Context, profileId string, params *ListProfileHitsParams, reqEditors ...RequestEditorFn) (*GetProfileHitsByProfileIdResponse, error) {
 	resp, err := c.raw.ListProfileHits(ctx, profileId, params, reqEditors...)
-	return decode[GetProfileHitsByProfileIdResponse]("ListProfileHits", resp, err)
+	return apicall.Decode[GetProfileHitsByProfileIdResponse]("ListProfileHits", resp, err)
 }
 
 // DeleteKeyParties sends DELETE /compliance/kyc-protect/profiles/{profileId}/keyparties.
@@ -27658,7 +27659,7 @@ func (c *Client) ListProfileHits(ctx context.Context, profileId string, params *
 // Delete a batch of key parties
 func (c *Client) DeleteKeyParties(ctx context.Context, profileId openapi_types.UUID, body DeleteKeyPartiesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteKeyPartiesResponseByProfileId, error) {
 	resp, err := c.raw.DeleteKeyParties(ctx, profileId, body, reqEditors...)
-	return decode[DeleteKeyPartiesResponseByProfileId]("DeleteKeyParties", resp, err)
+	return apicall.Decode[DeleteKeyPartiesResponseByProfileId]("DeleteKeyParties", resp, err)
 }
 
 // ListKeyParties sends GET /compliance/kyc-protect/profiles/{profileId}/keyparties.
@@ -27666,7 +27667,7 @@ func (c *Client) DeleteKeyParties(ctx context.Context, profileId openapi_types.U
 // Return All Key Party Records Linked To A Profile
 func (c *Client) ListKeyParties(ctx context.Context, profileId openapi_types.UUID, params *ListKeyPartiesParams, reqEditors ...RequestEditorFn) (*GetKeyPartiesResponseByProfileId, error) {
 	resp, err := c.raw.ListKeyParties(ctx, profileId, params, reqEditors...)
-	return decode[GetKeyPartiesResponseByProfileId]("ListKeyParties", resp, err)
+	return apicall.Decode[GetKeyPartiesResponseByProfileId]("ListKeyParties", resp, err)
 }
 
 // CreateKeyParties sends POST /compliance/kyc-protect/profiles/{profileId}/keyparties.
@@ -27679,7 +27680,7 @@ func (c *Client) CreateKeyParties(ctx context.Context, profileId openapi_types.U
 	Successful    *[]PostKYCKeypartiesByProfileIdResponse       `json:"successful,omitempty"`
 }, error) {
 	resp, err := c.raw.CreateKeyParties(ctx, profileId, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                                       `json:"correlationId,omitempty"`
 		Failed        *[]PostKYCKeypartiesByProfileIdFailedResponse `json:"failed,omitempty"`
@@ -27697,7 +27698,7 @@ func (c *Client) UpdateKeyParties(ctx context.Context, profileId openapi_types.U
 	Successful    *[]PostKYCKeypartiesByProfileIdResponse      `json:"successful,omitempty"`
 }, error) {
 	resp, err := c.raw.UpdateKeyParties(ctx, profileId, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                                      `json:"correlationId,omitempty"`
 		Failed        *[]PutKYCKeypartiesByProfileIdFailedResponse `json:"failed,omitempty"`
@@ -27710,7 +27711,7 @@ func (c *Client) UpdateKeyParties(ctx context.Context, profileId openapi_types.U
 // Delete A Batch Of Key Party Searches
 func (c *Client) DeleteKeyPartySearches(ctx context.Context, profileId openapi_types.UUID, body DeleteKeyPartySearchesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteKeyPartySearchContractResponse, error) {
 	resp, err := c.raw.DeleteKeyPartySearches(ctx, profileId, body, reqEditors...)
-	return decode[DeleteKeyPartySearchContractResponse]("DeleteKeyPartySearches", resp, err)
+	return apicall.Decode[DeleteKeyPartySearchContractResponse]("DeleteKeyPartySearches", resp, err)
 }
 
 // ListKeyPartySearches sends GET /compliance/kyc-protect/profiles/{profileId}/keyparties/searches.
@@ -27718,7 +27719,7 @@ func (c *Client) DeleteKeyPartySearches(ctx context.Context, profileId openapi_t
 // Return All Key Party Searches
 func (c *Client) ListKeyPartySearches(ctx context.Context, profileId openapi_types.UUID, params *ListKeyPartySearchesParams, reqEditors ...RequestEditorFn) (*GetKeyPartySearchResponse, error) {
 	resp, err := c.raw.ListKeyPartySearches(ctx, profileId, params, reqEditors...)
-	return decode[GetKeyPartySearchResponse]("ListKeyPartySearches", resp, err)
+	return apicall.Decode[GetKeyPartySearchResponse]("ListKeyPartySearches", resp, err)
 }
 
 // BulkSearchKeyParties sends POST /compliance/kyc-protect/profiles/{profileId}/keyparties/searches/bulk.
@@ -27726,7 +27727,7 @@ func (c *Client) ListKeyPartySearches(ctx context.Context, profileId openapi_typ
 // Request Multiple Searches Linked To A Key Party Asynchronously
 func (c *Client) BulkSearchKeyParties(ctx context.Context, profileId openapi_types.UUID, body BulkSearchKeyPartiesJSONRequestBody, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.BulkSearchKeyParties(ctx, profileId, body, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // LinkKeyPartySearches sends POST /compliance/kyc-protect/profiles/{profileId}/keyparties/searches/link.
@@ -27734,7 +27735,7 @@ func (c *Client) BulkSearchKeyParties(ctx context.Context, profileId openapi_typ
 // Link Searches To Key Parties
 func (c *Client) LinkKeyPartySearches(ctx context.Context, profileId openapi_types.UUID, body LinkKeyPartySearchesJSONRequestBody, reqEditors ...RequestEditorFn) (*PostKYCKeypartiesSearchesLinkByProfileIdResponse, error) {
 	resp, err := c.raw.LinkKeyPartySearches(ctx, profileId, body, reqEditors...)
-	return decode[PostKYCKeypartiesSearchesLinkByProfileIdResponse]("LinkKeyPartySearches", resp, err)
+	return apicall.Decode[PostKYCKeypartiesSearchesLinkByProfileIdResponse]("LinkKeyPartySearches", resp, err)
 }
 
 // DeleteKeyParty sends DELETE /compliance/kyc-protect/profiles/{profileId}/keyparties/{keyPartyId}.
@@ -27742,7 +27743,7 @@ func (c *Client) LinkKeyPartySearches(ctx context.Context, profileId openapi_typ
 // Delete A Key Party By Key Party Id
 func (c *Client) DeleteKeyParty(ctx context.Context, profileId openapi_types.UUID, keyPartyId openapi_types.UUID, reqEditors ...RequestEditorFn) (*DeleteKeyPartyByIdNoContent, error) {
 	resp, err := c.raw.DeleteKeyParty(ctx, profileId, keyPartyId, reqEditors...)
-	return decode[DeleteKeyPartyByIdNoContent]("DeleteKeyParty", resp, err)
+	return apicall.Decode[DeleteKeyPartyByIdNoContent]("DeleteKeyParty", resp, err)
 }
 
 // UpdateKeyParty sends PUT /compliance/kyc-protect/profiles/{profileId}/keyparties/{keyPartyId}.
@@ -27750,7 +27751,7 @@ func (c *Client) DeleteKeyParty(ctx context.Context, profileId openapi_types.UUI
 // Update The Key Party By Profile Id and Key Party Id
 func (c *Client) UpdateKeyParty(ctx context.Context, profileId openapi_types.UUID, keyPartyId openapi_types.UUID, body UpdateKeyPartyJSONRequestBody, reqEditors ...RequestEditorFn) (*KeyPartyByIdReturn, error) {
 	resp, err := c.raw.UpdateKeyParty(ctx, profileId, keyPartyId, body, reqEditors...)
-	return decode[KeyPartyByIdReturn]("UpdateKeyParty", resp, err)
+	return apicall.Decode[KeyPartyByIdReturn]("UpdateKeyParty", resp, err)
 }
 
 // ListProfileNotes sends GET /compliance/kyc-protect/profiles/{profileId}/notes.
@@ -27758,7 +27759,7 @@ func (c *Client) UpdateKeyParty(ctx context.Context, profileId openapi_types.UUI
 // Return Profile Notes
 func (c *Client) ListProfileNotes(ctx context.Context, profileId string, params *ListProfileNotesParams, reqEditors ...RequestEditorFn) (*GetKYCProtectProfileIdNotesResponse, error) {
 	resp, err := c.raw.ListProfileNotes(ctx, profileId, params, reqEditors...)
-	return decode[GetKYCProtectProfileIdNotesResponse]("ListProfileNotes", resp, err)
+	return apicall.Decode[GetKYCProtectProfileIdNotesResponse]("ListProfileNotes", resp, err)
 }
 
 // CreateProfileNote sends POST /compliance/kyc-protect/profiles/{profileId}/notes.
@@ -27766,7 +27767,7 @@ func (c *Client) ListProfileNotes(ctx context.Context, profileId string, params 
 // Create Profile Note
 func (c *Client) CreateProfileNote(ctx context.Context, profileId string, body CreateProfileNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*PostKYCProfileNotes, error) {
 	resp, err := c.raw.CreateProfileNote(ctx, profileId, body, reqEditors...)
-	return decode[PostKYCProfileNotes]("CreateProfileNote", resp, err)
+	return apicall.Decode[PostKYCProfileNotes]("CreateProfileNote", resp, err)
 }
 
 // DeleteProfileNote sends DELETE /compliance/kyc-protect/profiles/{profileId}/notes/{noteId}.
@@ -27774,7 +27775,7 @@ func (c *Client) CreateProfileNote(ctx context.Context, profileId string, body C
 // Delete Profile Note By Note Id
 func (c *Client) DeleteProfileNote(ctx context.Context, profileId string, noteId string, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.DeleteProfileNote(ctx, profileId, noteId, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // GetProfileNote sends GET /compliance/kyc-protect/profiles/{profileId}/notes/{noteId}.
@@ -27782,7 +27783,7 @@ func (c *Client) DeleteProfileNote(ctx context.Context, profileId string, noteId
 // Return Profile Notes By Note Id
 func (c *Client) GetProfileNote(ctx context.Context, profileId string, noteId string, reqEditors ...RequestEditorFn) (*GetKYCProtectProfileIdNoteIdResponse, error) {
 	resp, err := c.raw.GetProfileNote(ctx, profileId, noteId, reqEditors...)
-	return decode[GetKYCProtectProfileIdNoteIdResponse]("GetProfileNote", resp, err)
+	return apicall.Decode[GetKYCProtectProfileIdNoteIdResponse]("GetProfileNote", resp, err)
 }
 
 // UpdateProfileNote sends PUT /compliance/kyc-protect/profiles/{profileId}/notes/{noteId}.
@@ -27790,7 +27791,7 @@ func (c *Client) GetProfileNote(ctx context.Context, profileId string, noteId st
 // Update Profile Note By Note Id
 func (c *Client) UpdateProfileNote(ctx context.Context, profileId string, noteId string, body UpdateProfileNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*PutKYCProfileNotesByNoteId, error) {
 	resp, err := c.raw.UpdateProfileNote(ctx, profileId, noteId, body, reqEditors...)
-	return decode[PutKYCProfileNotesByNoteId]("UpdateProfileNote", resp, err)
+	return apicall.Decode[PutKYCProfileNotesByNoteId]("UpdateProfileNote", resp, err)
 }
 
 // ListProfileSchedules sends GET /compliance/kyc-protect/profiles/{profileId}/schedules.
@@ -27798,7 +27799,7 @@ func (c *Client) UpdateProfileNote(ctx context.Context, profileId string, noteId
 // Return All Schedules By ProfileId And Modified Date
 func (c *Client) ListProfileSchedules(ctx context.Context, profileId openapi_types.UUID, params *ListProfileSchedulesParams, reqEditors ...RequestEditorFn) (*KYCProfileScheduleResponse, error) {
 	resp, err := c.raw.ListProfileSchedules(ctx, profileId, params, reqEditors...)
-	return decode[KYCProfileScheduleResponse]("ListProfileSchedules", resp, err)
+	return apicall.Decode[KYCProfileScheduleResponse]("ListProfileSchedules", resp, err)
 }
 
 // GetProfileSchedule sends GET /compliance/kyc-protect/profiles/{profileId}/schedules/{scheduleId}.
@@ -27806,7 +27807,7 @@ func (c *Client) ListProfileSchedules(ctx context.Context, profileId openapi_typ
 // Return Schedule By ProfileId And ScheduleId
 func (c *Client) GetProfileSchedule(ctx context.Context, profileId openapi_types.UUID, scheduleId string, reqEditors ...RequestEditorFn) (*KYCProfileIdSchedulesScheduleIdResponse, error) {
 	resp, err := c.raw.GetProfileSchedule(ctx, profileId, scheduleId, reqEditors...)
-	return decode[KYCProfileIdSchedulesScheduleIdResponse]("GetProfileSchedule", resp, err)
+	return apicall.Decode[KYCProfileIdSchedulesScheduleIdResponse]("GetProfileSchedule", resp, err)
 }
 
 // DeleteProfileSearches sends DELETE /compliance/kyc-protect/profiles/{profileId}/searches.
@@ -27814,7 +27815,7 @@ func (c *Client) GetProfileSchedule(ctx context.Context, profileId openapi_types
 // Delete AML searches linked to a profile
 func (c *Client) DeleteProfileSearches(ctx context.Context, profileId string, body DeleteProfileSearchesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteKYCProfileSearchesByProfileIdResponse, error) {
 	resp, err := c.raw.DeleteProfileSearches(ctx, profileId, body, reqEditors...)
-	return decode[DeleteKYCProfileSearchesByProfileIdResponse]("DeleteProfileSearches", resp, err)
+	return apicall.Decode[DeleteKYCProfileSearchesByProfileIdResponse]("DeleteProfileSearches", resp, err)
 }
 
 // ListProfileSearches sends GET /compliance/kyc-protect/profiles/{profileId}/searches.
@@ -27827,7 +27828,7 @@ func (c *Client) ListProfileSearches(ctx context.Context, profileId openapi_type
 	TotalSize     *int32                         `json:"totalSize,omitempty"`
 }, error) {
 	resp, err := c.raw.ListProfileSearches(ctx, profileId, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string                        `json:"correlationId,omitempty"`
 		Items         *[]KycProtectGetSearchResponse `json:"items,omitempty"`
@@ -27840,7 +27841,7 @@ func (c *Client) ListProfileSearches(ctx context.Context, profileId openapi_type
 // Execute Bulk AML Screening
 func (c *Client) BulkSearchProfile(ctx context.Context, profileId openapi_types.UUID, body BulkSearchProfileJSONRequestBody, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.BulkSearchProfile(ctx, profileId, body, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // LinkProfileSearches sends POST /compliance/kyc-protect/profiles/{profileId}/searches/link.
@@ -27856,7 +27857,7 @@ func (c *Client) LinkProfileSearches(ctx context.Context, profileId openapi_type
 	Successful *[]*openapi_types.UUID `json:"successful,omitempty"`
 }, error) {
 	resp, err := c.raw.LinkProfileSearches(ctx, profileId, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 		Failed        *[]struct {
@@ -27872,7 +27873,7 @@ func (c *Client) LinkProfileSearches(ctx context.Context, profileId openapi_type
 // Return Report By Type
 func (c *Client) ListReports(ctx context.Context, params *ListReportsParams, reqEditors ...RequestEditorFn) (*GetKycProtectReportsResponse, error) {
 	resp, err := c.raw.ListReports(ctx, params, reqEditors...)
-	return decode[GetKycProtectReportsResponse]("ListReports", resp, err)
+	return apicall.Decode[GetKycProtectReportsResponse]("ListReports", resp, err)
 }
 
 // CreateReport sends POST /compliance/kyc-protect/reports.
@@ -27880,7 +27881,7 @@ func (c *Client) ListReports(ctx context.Context, params *ListReportsParams, req
 // Create AML / Audit Report
 func (c *Client) CreateReport(ctx context.Context, body CreateReportJSONRequestBody, reqEditors ...RequestEditorFn) (*PostKycProtectReportResponse, error) {
 	resp, err := c.raw.CreateReport(ctx, body, reqEditors...)
-	return decode[PostKycProtectReportResponse]("CreateReport", resp, err)
+	return apicall.Decode[PostKycProtectReportResponse]("CreateReport", resp, err)
 }
 
 // GetReportCriteria sends GET /compliance/kyc-protect/reports/criteria/{type}.
@@ -27888,7 +27889,7 @@ func (c *Client) CreateReport(ctx context.Context, body CreateReportJSONRequestB
 // Retrieve Report Criteria
 func (c *Client) GetReportCriteria(ctx context.Context, pType GetReportCriteriaParamsType, reqEditors ...RequestEditorFn) (*GetReportCriteria200JSONResponseBody, error) {
 	resp, err := c.raw.GetReportCriteria(ctx, pType, reqEditors...)
-	return decode[GetReportCriteria200JSONResponseBody]("GetReportCriteria", resp, err)
+	return apicall.Decode[GetReportCriteria200JSONResponseBody]("GetReportCriteria", resp, err)
 }
 
 // GetReport sends GET /compliance/kyc-protect/reports/{reportId}.
@@ -27896,7 +27897,7 @@ func (c *Client) GetReportCriteria(ctx context.Context, pType GetReportCriteriaP
 // Retrieve a Single Report by ID
 func (c *Client) GetReport(ctx context.Context, reportId openapi_types.UUID, reqEditors ...RequestEditorFn) (*GetKycProtectReportsResponseByReportId, error) {
 	resp, err := c.raw.GetReport(ctx, reportId, reqEditors...)
-	return decode[GetKycProtectReportsResponseByReportId]("GetReport", resp, err)
+	return apicall.Decode[GetKycProtectReportsResponseByReportId]("GetReport", resp, err)
 }
 
 // DownloadReport sends GET /compliance/kyc-protect/reports/{reportId}/download.
@@ -27916,7 +27917,7 @@ func (c *Client) DownloadReport(ctx context.Context, reportId openapi_types.UUID
 	FileName *string `json:"fileName,omitempty"`
 }, error) {
 	resp, err := c.raw.DownloadReport(ctx, reportId, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -27936,7 +27937,7 @@ func (c *Client) DownloadReport(ctx context.Context, reportId openapi_types.UUID
 // Delete Searches From AML Monitoring
 func (c *Client) DeleteSchedules(ctx context.Context, body DeleteSchedulesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteKYCProtectSchedulesResponse, error) {
 	resp, err := c.raw.DeleteSchedules(ctx, body, reqEditors...)
-	return decode[DeleteKYCProtectSchedulesResponse]("DeleteSchedules", resp, err)
+	return apicall.Decode[DeleteKYCProtectSchedulesResponse]("DeleteSchedules", resp, err)
 }
 
 // ListSchedules sends GET /compliance/kyc-protect/schedules.
@@ -27944,7 +27945,7 @@ func (c *Client) DeleteSchedules(ctx context.Context, body DeleteSchedulesJSONRe
 // Return All Ordered Schedules
 func (c *Client) ListSchedules(ctx context.Context, params *ListSchedulesParams, reqEditors ...RequestEditorFn) (*ScheduleResponse, error) {
 	resp, err := c.raw.ListSchedules(ctx, params, reqEditors...)
-	return decode[ScheduleResponse]("ListSchedules", resp, err)
+	return apicall.Decode[ScheduleResponse]("ListSchedules", resp, err)
 }
 
 // CreateSchedule sends POST /compliance/kyc-protect/schedules.
@@ -27952,7 +27953,7 @@ func (c *Client) ListSchedules(ctx context.Context, params *ListSchedulesParams,
 // Add Search To AML Monitoring
 func (c *Client) CreateSchedule(ctx context.Context, body CreateScheduleJSONRequestBody, reqEditors ...RequestEditorFn) (*PostKYCProtectSchedulesResponse, error) {
 	resp, err := c.raw.CreateSchedule(ctx, body, reqEditors...)
-	return decode[PostKYCProtectSchedulesResponse]("CreateSchedule", resp, err)
+	return apicall.Decode[PostKYCProtectSchedulesResponse]("CreateSchedule", resp, err)
 }
 
 // UpdateSchedules sends PUT /compliance/kyc-protect/schedules.
@@ -27960,7 +27961,7 @@ func (c *Client) CreateSchedule(ctx context.Context, body CreateScheduleJSONRequ
 // Update Schedules
 func (c *Client) UpdateSchedules(ctx context.Context, body UpdateSchedulesJSONRequestBody, reqEditors ...RequestEditorFn) (*PutKYCProtectSchedulesResponse, error) {
 	resp, err := c.raw.UpdateSchedules(ctx, body, reqEditors...)
-	return decode[PutKYCProtectSchedulesResponse]("UpdateSchedules", resp, err)
+	return apicall.Decode[PutKYCProtectSchedulesResponse]("UpdateSchedules", resp, err)
 }
 
 // ListScheduleAMLAlerts sends GET /compliance/kyc-protect/schedules/amlAlerts.
@@ -27972,7 +27973,7 @@ func (c *Client) ListScheduleAMLAlerts(ctx context.Context, params *ListSchedule
 	TotalSize     *int32                           `json:"totalSize,omitempty"`
 }, error) {
 	resp, err := c.raw.ListScheduleAMLAlerts(ctx, params, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		CorrelationId *string                          `json:"correlationId,omitempty"`
 		Items         *[]KYCProtectScheduleHitResponse `json:"items,omitempty"`
 		TotalSize     *int32                           `json:"totalSize,omitempty"`
@@ -27984,7 +27985,7 @@ func (c *Client) ListScheduleAMLAlerts(ctx context.Context, params *ListSchedule
 // Delete A Search From AML Monitoring
 func (c *Client) DeleteSchedule(ctx context.Context, scheduleId openapi_types.UUID, reqEditors ...RequestEditorFn) error {
 	resp, err := c.raw.DeleteSchedule(ctx, scheduleId, reqEditors...)
-	return discard(resp, err)
+	return apicall.Discard(resp, err)
 }
 
 // GetSchedule sends GET /compliance/kyc-protect/schedules/{scheduleId}.
@@ -28067,7 +28068,7 @@ func (c *Client) GetSchedule(ctx context.Context, scheduleId openapi_types.UUID,
 	Type *string `json:"type,omitempty"`
 }, error) {
 	resp, err := c.raw.GetSchedule(ctx, scheduleId, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -28225,7 +28226,7 @@ func (c *Client) UpdateSchedule(ctx context.Context, scheduleId openapi_types.UU
 	Type *string `json:"type,omitempty"`
 }, error) {
 	resp, err := c.raw.UpdateSchedule(ctx, scheduleId, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -28308,7 +28309,7 @@ func (c *Client) UpdateSchedule(ctx context.Context, scheduleId openapi_types.UU
 // Return Business Links With Supplier Hit Id
 func (c *Client) GetBusinessSearchLinks(ctx context.Context, supplierHitId string, reqEditors ...RequestEditorFn) (*GetKYCSearchLinksBySupplierHitId, error) {
 	resp, err := c.raw.GetBusinessSearchLinks(ctx, supplierHitId, reqEditors...)
-	return decode[GetKYCSearchLinksBySupplierHitId]("GetBusinessSearchLinks", resp, err)
+	return apicall.Decode[GetKYCSearchLinksBySupplierHitId]("GetBusinessSearchLinks", resp, err)
 }
 
 // DownloadBusinessSearchLinks sends POST /compliance/kyc-protect/searchLinks/businesses/{supplierHitId}/download.
@@ -28316,7 +28317,7 @@ func (c *Client) GetBusinessSearchLinks(ctx context.Context, supplierHitId strin
 // Download Business Search Links PDF
 func (c *Client) DownloadBusinessSearchLinks(ctx context.Context, supplierHitId string, reqEditors ...RequestEditorFn) (*PostKYCSearchLinksBySupplierHitIdDownloadResponse, error) {
 	resp, err := c.raw.DownloadBusinessSearchLinks(ctx, supplierHitId, reqEditors...)
-	return decode[PostKYCSearchLinksBySupplierHitIdDownloadResponse]("DownloadBusinessSearchLinks", resp, err)
+	return apicall.Decode[PostKYCSearchLinksBySupplierHitIdDownloadResponse]("DownloadBusinessSearchLinks", resp, err)
 }
 
 // GetIndividualSearchLinks sends GET /compliance/kyc-protect/searchLinks/individuals/{supplierHitId}.
@@ -28324,7 +28325,7 @@ func (c *Client) DownloadBusinessSearchLinks(ctx context.Context, supplierHitId 
 // Return Individual Links With Supplier Hit Id
 func (c *Client) GetIndividualSearchLinks(ctx context.Context, supplierHitId string, reqEditors ...RequestEditorFn) (*GetKYCSearchLinksIndividualBySupplierHitId, error) {
 	resp, err := c.raw.GetIndividualSearchLinks(ctx, supplierHitId, reqEditors...)
-	return decode[GetKYCSearchLinksIndividualBySupplierHitId]("GetIndividualSearchLinks", resp, err)
+	return apicall.Decode[GetKYCSearchLinksIndividualBySupplierHitId]("GetIndividualSearchLinks", resp, err)
 }
 
 // DownloadIndividualSearchLinks sends POST /compliance/kyc-protect/searchLinks/individuals/{supplierHitId}/download.
@@ -28332,7 +28333,7 @@ func (c *Client) GetIndividualSearchLinks(ctx context.Context, supplierHitId str
 // Download Individual Search Links PDF
 func (c *Client) DownloadIndividualSearchLinks(ctx context.Context, supplierHitId string, reqEditors ...RequestEditorFn) (*PostKYCSearchLinksBySupplierHitIdDownloadResponse, error) {
 	resp, err := c.raw.DownloadIndividualSearchLinks(ctx, supplierHitId, reqEditors...)
-	return decode[PostKYCSearchLinksBySupplierHitIdDownloadResponse]("DownloadIndividualSearchLinks", resp, err)
+	return apicall.Decode[PostKYCSearchLinksBySupplierHitIdDownloadResponse]("DownloadIndividualSearchLinks", resp, err)
 }
 
 // ListSearches sends GET /compliance/kyc-protect/searches.
@@ -28340,7 +28341,7 @@ func (c *Client) DownloadIndividualSearchLinks(ctx context.Context, supplierHitI
 // Return Compliance Kyc Protect Searches Results
 func (c *Client) ListSearches(ctx context.Context, params *ListSearchesParams, reqEditors ...RequestEditorFn) (*KycProtectGetIndividualSearchResponse, error) {
 	resp, err := c.raw.ListSearches(ctx, params, reqEditors...)
-	return decode[KycProtectGetIndividualSearchResponse]("ListSearches", resp, err)
+	return apicall.Decode[KycProtectGetIndividualSearchResponse]("ListSearches", resp, err)
 }
 
 // ListBusinessSearches sends GET /compliance/kyc-protect/searches/businesses.
@@ -28348,7 +28349,7 @@ func (c *Client) ListSearches(ctx context.Context, params *ListSearchesParams, r
 // Return Business AML Searches
 func (c *Client) ListBusinessSearches(ctx context.Context, params *ListBusinessSearchesParams, reqEditors ...RequestEditorFn) (*MODELf73bb1, error) {
 	resp, err := c.raw.ListBusinessSearches(ctx, params, reqEditors...)
-	return decode[MODELf73bb1]("ListBusinessSearches", resp, err)
+	return apicall.Decode[MODELf73bb1]("ListBusinessSearches", resp, err)
 }
 
 // CreateBusinessSearch sends POST /compliance/kyc-protect/searches/businesses.
@@ -28356,7 +28357,7 @@ func (c *Client) ListBusinessSearches(ctx context.Context, params *ListBusinessS
 // Execute An AML Search For A Business And Saves The Results To The Database
 func (c *Client) CreateBusinessSearch(ctx context.Context, body CreateBusinessSearchJSONRequestBody, reqEditors ...RequestEditorFn) (*MODEL931a1b, error) {
 	resp, err := c.raw.CreateBusinessSearch(ctx, body, reqEditors...)
-	return decode[MODEL931a1b]("CreateBusinessSearch", resp, err)
+	return apicall.Decode[MODEL931a1b]("CreateBusinessSearch", resp, err)
 }
 
 // UpdateBusinessSearches sends PUT /compliance/kyc-protect/searches/businesses.
@@ -28364,7 +28365,7 @@ func (c *Client) CreateBusinessSearch(ctx context.Context, body CreateBusinessSe
 // Update Business AML Searches
 func (c *Client) UpdateBusinessSearches(ctx context.Context, body UpdateBusinessSearchesJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCPUTSearchBusinessesResponse, error) {
 	resp, err := c.raw.UpdateBusinessSearches(ctx, body, reqEditors...)
-	return decode[KYCPUTSearchBusinessesResponse]("UpdateBusinessSearches", resp, err)
+	return apicall.Decode[KYCPUTSearchBusinessesResponse]("UpdateBusinessSearches", resp, err)
 }
 
 // DownloadBusinessSearches sends POST /compliance/kyc-protect/searches/businesses/download.
@@ -28387,7 +28388,7 @@ func (c *Client) DownloadBusinessSearches(ctx context.Context, body DownloadBusi
 	SearchId *openapi_types.UUID `json:"searchId,omitempty"`
 }, error) {
 	resp, err := c.raw.DownloadBusinessSearches(ctx, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -28410,7 +28411,7 @@ func (c *Client) DownloadBusinessSearches(ctx context.Context, body DownloadBusi
 // Return Business AML Search By Search Id
 func (c *Client) GetBusinessSearch(ctx context.Context, searchId string, reqEditors ...RequestEditorFn) (*KYCGetSearchBusinessesBySearchIdResponse, error) {
 	resp, err := c.raw.GetBusinessSearch(ctx, searchId, reqEditors...)
-	return decode[KYCGetSearchBusinessesBySearchIdResponse]("GetBusinessSearch", resp, err)
+	return apicall.Decode[KYCGetSearchBusinessesBySearchIdResponse]("GetBusinessSearch", resp, err)
 }
 
 // UpdateBusinessSearch sends PUT /compliance/kyc-protect/searches/businesses/{searchId}.
@@ -28418,7 +28419,7 @@ func (c *Client) GetBusinessSearch(ctx context.Context, searchId string, reqEdit
 // Update A Business AML Search By Search Id
 func (c *Client) UpdateBusinessSearch(ctx context.Context, searchId string, body UpdateBusinessSearchJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCPutSearchBusinessesBySearchIdResponse, error) {
 	resp, err := c.raw.UpdateBusinessSearch(ctx, searchId, body, reqEditors...)
-	return decode[KYCPutSearchBusinessesBySearchIdResponse]("UpdateBusinessSearch", resp, err)
+	return apicall.Decode[KYCPutSearchBusinessesBySearchIdResponse]("UpdateBusinessSearch", resp, err)
 }
 
 // DownloadBusinessSearch sends POST /compliance/kyc-protect/searches/businesses/{searchId}/download.
@@ -28426,7 +28427,7 @@ func (c *Client) UpdateBusinessSearch(ctx context.Context, searchId string, body
 // Download PDF Business Search Report
 func (c *Client) DownloadBusinessSearch(ctx context.Context, searchId string, body DownloadBusinessSearchJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCGetSearchBusinessesDownloadBySearchIdResponse, error) {
 	resp, err := c.raw.DownloadBusinessSearch(ctx, searchId, body, reqEditors...)
-	return decode[KYCGetSearchBusinessesDownloadBySearchIdResponse]("DownloadBusinessSearch", resp, err)
+	return apicall.Decode[KYCGetSearchBusinessesDownloadBySearchIdResponse]("DownloadBusinessSearch", resp, err)
 }
 
 // ListBusinessSearchHits sends GET /compliance/kyc-protect/searches/businesses/{searchId}/hits.
@@ -28434,7 +28435,7 @@ func (c *Client) DownloadBusinessSearch(ctx context.Context, searchId string, bo
 // Return Business AML Search Hits
 func (c *Client) ListBusinessSearchHits(ctx context.Context, searchId string, params *ListBusinessSearchHitsParams, reqEditors ...RequestEditorFn) (*KYCGetSearchBusinessesBySearchIdHitsResponse, error) {
 	resp, err := c.raw.ListBusinessSearchHits(ctx, searchId, params, reqEditors...)
-	return decode[KYCGetSearchBusinessesBySearchIdHitsResponse]("ListBusinessSearchHits", resp, err)
+	return apicall.Decode[KYCGetSearchBusinessesBySearchIdHitsResponse]("ListBusinessSearchHits", resp, err)
 }
 
 // UpdateBusinessSearchHits sends PUT /compliance/kyc-protect/searches/businesses/{searchId}/hits.
@@ -28442,7 +28443,7 @@ func (c *Client) ListBusinessSearchHits(ctx context.Context, searchId string, pa
 // Update Batch Of Business AML Search Hits
 func (c *Client) UpdateBusinessSearchHits(ctx context.Context, searchId string, body UpdateBusinessSearchHitsJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCPutSearchBusinessesBySearchIdHitsResponse, error) {
 	resp, err := c.raw.UpdateBusinessSearchHits(ctx, searchId, body, reqEditors...)
-	return decode[KYCPutSearchBusinessesBySearchIdHitsResponse]("UpdateBusinessSearchHits", resp, err)
+	return apicall.Decode[KYCPutSearchBusinessesBySearchIdHitsResponse]("UpdateBusinessSearchHits", resp, err)
 }
 
 // GetBusinessSearchHit sends GET /compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}.
@@ -28450,7 +28451,7 @@ func (c *Client) UpdateBusinessSearchHits(ctx context.Context, searchId string, 
 // Return Full Business AML Search Hit Information By SearchId And HitId
 func (c *Client) GetBusinessSearchHit(ctx context.Context, searchId string, hitId string, reqEditors ...RequestEditorFn) (*WebApiModelsSearchesSearchResultHitsBusinessSearchResultHitResponse, error) {
 	resp, err := c.raw.GetBusinessSearchHit(ctx, searchId, hitId, reqEditors...)
-	return decode[WebApiModelsSearchesSearchResultHitsBusinessSearchResultHitResponse]("GetBusinessSearchHit", resp, err)
+	return apicall.Decode[WebApiModelsSearchesSearchResultHitsBusinessSearchResultHitResponse]("GetBusinessSearchHit", resp, err)
 }
 
 // UpdateBusinessSearchHit sends PUT /compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}.
@@ -28458,7 +28459,7 @@ func (c *Client) GetBusinessSearchHit(ctx context.Context, searchId string, hitI
 // Update A Single Business Hit
 func (c *Client) UpdateBusinessSearchHit(ctx context.Context, searchId string, hitId string, body UpdateBusinessSearchHitJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCBusinessSearchResultHitSummaryResponse, error) {
 	resp, err := c.raw.UpdateBusinessSearchHit(ctx, searchId, hitId, body, reqEditors...)
-	return decode[KYCBusinessSearchResultHitSummaryResponse]("UpdateBusinessSearchHit", resp, err)
+	return apicall.Decode[KYCBusinessSearchResultHitSummaryResponse]("UpdateBusinessSearchHit", resp, err)
 }
 
 // ListBusinessSearchHitChanges sends GET /compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/changes.
@@ -28466,7 +28467,7 @@ func (c *Client) UpdateBusinessSearchHit(ctx context.Context, searchId string, h
 // Return Change History For A Business Hit
 func (c *Client) ListBusinessSearchHitChanges(ctx context.Context, searchId string, hitId string, reqEditors ...RequestEditorFn) (*KYCBusinessSearchHitChangesResponse, error) {
 	resp, err := c.raw.ListBusinessSearchHitChanges(ctx, searchId, hitId, reqEditors...)
-	return decode[KYCBusinessSearchHitChangesResponse]("ListBusinessSearchHitChanges", resp, err)
+	return apicall.Decode[KYCBusinessSearchHitChangesResponse]("ListBusinessSearchHitChanges", resp, err)
 }
 
 // DownloadBusinessSearchHit sends GET /compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/download.
@@ -28474,7 +28475,7 @@ func (c *Client) ListBusinessSearchHitChanges(ctx context.Context, searchId stri
 // Download Business AML Details for a Hit
 func (c *Client) DownloadBusinessSearchHit(ctx context.Context, searchId openapi_types.UUID, hitId openapi_types.UUID, reqEditors ...RequestEditorFn) (*WebApiModelsSearchesSearchResultHitsBusinessSearchHitAttachmentLinkResponse, error) {
 	resp, err := c.raw.DownloadBusinessSearchHit(ctx, searchId, hitId, reqEditors...)
-	return decode[WebApiModelsSearchesSearchResultHitsBusinessSearchHitAttachmentLinkResponse]("DownloadBusinessSearchHit", resp, err)
+	return apicall.Decode[WebApiModelsSearchesSearchResultHitsBusinessSearchHitAttachmentLinkResponse]("DownloadBusinessSearchHit", resp, err)
 }
 
 // UpdateBusinessSearchHitNote sends PUT /compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/note.
@@ -28482,7 +28483,7 @@ func (c *Client) DownloadBusinessSearchHit(ctx context.Context, searchId openapi
 // Update The Note For A Single Businesses Hit
 func (c *Client) UpdateBusinessSearchHitNote(ctx context.Context, searchId string, hitId string, body UpdateBusinessSearchHitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCBusinessSearchResultHitSummaryResponse, error) {
 	resp, err := c.raw.UpdateBusinessSearchHitNote(ctx, searchId, hitId, body, reqEditors...)
-	return decode[KYCBusinessSearchResultHitSummaryResponse]("UpdateBusinessSearchHitNote", resp, err)
+	return apicall.Decode[KYCBusinessSearchResultHitSummaryResponse]("UpdateBusinessSearchHitNote", resp, err)
 }
 
 // DownloadBusinessSearchHitCopyrightedSource sends GET /compliance/kyc-protect/searches/businesses/{searchId}/hits/{hitId}/sources/{sourceId}/copyrighted/download.
@@ -28490,7 +28491,7 @@ func (c *Client) UpdateBusinessSearchHitNote(ctx context.Context, searchId strin
 // Return Business AML Copyrighted Download URL
 func (c *Client) DownloadBusinessSearchHitCopyrightedSource(ctx context.Context, searchId string, hitId string, sourceId string, reqEditors ...RequestEditorFn) (*WebApiModelsSearchesBusinessesSearchIdHitsHitIdSourcesSourceIdCopyrightedDownloadResponse, error) {
 	resp, err := c.raw.DownloadBusinessSearchHitCopyrightedSource(ctx, searchId, hitId, sourceId, reqEditors...)
-	return decode[WebApiModelsSearchesBusinessesSearchIdHitsHitIdSourcesSourceIdCopyrightedDownloadResponse]("DownloadBusinessSearchHitCopyrightedSource", resp, err)
+	return apicall.Decode[WebApiModelsSearchesBusinessesSearchIdHitsHitIdSourcesSourceIdCopyrightedDownloadResponse]("DownloadBusinessSearchHitCopyrightedSource", resp, err)
 }
 
 // ListIndividualSearches sends GET /compliance/kyc-protect/searches/individuals.
@@ -28498,7 +28499,7 @@ func (c *Client) DownloadBusinessSearchHitCopyrightedSource(ctx context.Context,
 // Return Individual AML Searches
 func (c *Client) ListIndividualSearches(ctx context.Context, params *ListIndividualSearchesParams, reqEditors ...RequestEditorFn) (*KycProtectIndividualSearchResponse, error) {
 	resp, err := c.raw.ListIndividualSearches(ctx, params, reqEditors...)
-	return decode[KycProtectIndividualSearchResponse]("ListIndividualSearches", resp, err)
+	return apicall.Decode[KycProtectIndividualSearchResponse]("ListIndividualSearches", resp, err)
 }
 
 // CreateIndividualSearch sends POST /compliance/kyc-protect/searches/individuals.
@@ -28506,7 +28507,7 @@ func (c *Client) ListIndividualSearches(ctx context.Context, params *ListIndivid
 // Execute An AML Search For An Individual And Save The Results To The Database
 func (c *Client) CreateIndividualSearch(ctx context.Context, body CreateIndividualSearchJSONRequestBody, reqEditors ...RequestEditorFn) (*KycProtectPostPostIndividualSearchResponse, error) {
 	resp, err := c.raw.CreateIndividualSearch(ctx, body, reqEditors...)
-	return decode[KycProtectPostPostIndividualSearchResponse]("CreateIndividualSearch", resp, err)
+	return apicall.Decode[KycProtectPostPostIndividualSearchResponse]("CreateIndividualSearch", resp, err)
 }
 
 // UpdateIndividualSearches sends PUT /compliance/kyc-protect/searches/individuals.
@@ -28514,7 +28515,7 @@ func (c *Client) CreateIndividualSearch(ctx context.Context, body CreateIndividu
 // Update Individual AML Searches
 func (c *Client) UpdateIndividualSearches(ctx context.Context, body UpdateIndividualSearchesJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCPUTSearchIndividualResponse, error) {
 	resp, err := c.raw.UpdateIndividualSearches(ctx, body, reqEditors...)
-	return decode[KYCPUTSearchIndividualResponse]("UpdateIndividualSearches", resp, err)
+	return apicall.Decode[KYCPUTSearchIndividualResponse]("UpdateIndividualSearches", resp, err)
 }
 
 // DownloadIndividualSearches sends POST /compliance/kyc-protect/searches/individuals/download.
@@ -28537,7 +28538,7 @@ func (c *Client) DownloadIndividualSearches(ctx context.Context, body DownloadIn
 	SearchId *openapi_types.UUID `json:"searchId,omitempty"`
 }, error) {
 	resp, err := c.raw.DownloadIndividualSearches(ctx, body, reqEditors...)
-	return decode[struct {
+	return apicall.Decode[struct {
 		// CorrelationId A unique ID assigned to this request.
 		CorrelationId *string `json:"correlationId,omitempty"`
 
@@ -28560,7 +28561,7 @@ func (c *Client) DownloadIndividualSearches(ctx context.Context, body DownloadIn
 // Return Individual AML Search By Search Id
 func (c *Client) GetIndividualSearch(ctx context.Context, searchId openapi_types.UUID, reqEditors ...RequestEditorFn) (*KYCGetSearchIndividualBySearchIdResponse, error) {
 	resp, err := c.raw.GetIndividualSearch(ctx, searchId, reqEditors...)
-	return decode[KYCGetSearchIndividualBySearchIdResponse]("GetIndividualSearch", resp, err)
+	return apicall.Decode[KYCGetSearchIndividualBySearchIdResponse]("GetIndividualSearch", resp, err)
 }
 
 // UpdateIndividualSearch sends PUT /compliance/kyc-protect/searches/individuals/{searchId}.
@@ -28568,7 +28569,7 @@ func (c *Client) GetIndividualSearch(ctx context.Context, searchId openapi_types
 // Update An Individual AML Search By SearchID
 func (c *Client) UpdateIndividualSearch(ctx context.Context, searchId openapi_types.UUID, body UpdateIndividualSearchJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCPutSearchIndividualBySearchIdResponse, error) {
 	resp, err := c.raw.UpdateIndividualSearch(ctx, searchId, body, reqEditors...)
-	return decode[KYCPutSearchIndividualBySearchIdResponse]("UpdateIndividualSearch", resp, err)
+	return apicall.Decode[KYCPutSearchIndividualBySearchIdResponse]("UpdateIndividualSearch", resp, err)
 }
 
 // DownloadIndividualSearch sends POST /compliance/kyc-protect/searches/individuals/{searchId}/download.
@@ -28576,7 +28577,7 @@ func (c *Client) UpdateIndividualSearch(ctx context.Context, searchId openapi_ty
 // Download PDF Individual Search Report
 func (c *Client) DownloadIndividualSearch(ctx context.Context, searchId string, body DownloadIndividualSearchJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCGetSearchIndividualsDownloadBySearchIdResponse, error) {
 	resp, err := c.raw.DownloadIndividualSearch(ctx, searchId, body, reqEditors...)
-	return decode[KYCGetSearchIndividualsDownloadBySearchIdResponse]("DownloadIndividualSearch", resp, err)
+	return apicall.Decode[KYCGetSearchIndividualsDownloadBySearchIdResponse]("DownloadIndividualSearch", resp, err)
 }
 
 // ListIndividualSearchHits sends GET /compliance/kyc-protect/searches/individuals/{searchId}/hits.
@@ -28584,7 +28585,7 @@ func (c *Client) DownloadIndividualSearch(ctx context.Context, searchId string, 
 // Return Individual AML Search Hits
 func (c *Client) ListIndividualSearchHits(ctx context.Context, searchId openapi_types.UUID, params *ListIndividualSearchHitsParams, reqEditors ...RequestEditorFn) (*GetIndividualSearchIdHitsResponse, error) {
 	resp, err := c.raw.ListIndividualSearchHits(ctx, searchId, params, reqEditors...)
-	return decode[GetIndividualSearchIdHitsResponse]("ListIndividualSearchHits", resp, err)
+	return apicall.Decode[GetIndividualSearchIdHitsResponse]("ListIndividualSearchHits", resp, err)
 }
 
 // UpdateIndividualSearchHits sends PUT /compliance/kyc-protect/searches/individuals/{searchId}/hits.
@@ -28592,7 +28593,7 @@ func (c *Client) ListIndividualSearchHits(ctx context.Context, searchId openapi_
 // Update A Batch Of individual AML search Hits
 func (c *Client) UpdateIndividualSearchHits(ctx context.Context, searchId openapi_types.UUID, body UpdateIndividualSearchHitsJSONRequestBody, reqEditors ...RequestEditorFn) (*PutIndividualSearchIdHitsResponse, error) {
 	resp, err := c.raw.UpdateIndividualSearchHits(ctx, searchId, body, reqEditors...)
-	return decode[PutIndividualSearchIdHitsResponse]("UpdateIndividualSearchHits", resp, err)
+	return apicall.Decode[PutIndividualSearchIdHitsResponse]("UpdateIndividualSearchHits", resp, err)
 }
 
 // GetIndividualSearchHit sends GET /compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}.
@@ -28600,7 +28601,7 @@ func (c *Client) UpdateIndividualSearchHits(ctx context.Context, searchId openap
 // Return Full Individual AML Search Hit Information By SearchId And HitId
 func (c *Client) GetIndividualSearchHit(ctx context.Context, searchId openapi_types.UUID, hitId openapi_types.UUID, reqEditors ...RequestEditorFn) (*IndividualSearchResultHitResponse, error) {
 	resp, err := c.raw.GetIndividualSearchHit(ctx, searchId, hitId, reqEditors...)
-	return decode[IndividualSearchResultHitResponse]("GetIndividualSearchHit", resp, err)
+	return apicall.Decode[IndividualSearchResultHitResponse]("GetIndividualSearchHit", resp, err)
 }
 
 // UpdateIndividualSearchHit sends PUT /compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}.
@@ -28608,7 +28609,7 @@ func (c *Client) GetIndividualSearchHit(ctx context.Context, searchId openapi_ty
 // Update A Single Individual Hit
 func (c *Client) UpdateIndividualSearchHit(ctx context.Context, searchId openapi_types.UUID, hitId openapi_types.UUID, body UpdateIndividualSearchHitJSONRequestBody, reqEditors ...RequestEditorFn) (*PutIndividualSearchIdHitsByHitIdResponse, error) {
 	resp, err := c.raw.UpdateIndividualSearchHit(ctx, searchId, hitId, body, reqEditors...)
-	return decode[PutIndividualSearchIdHitsByHitIdResponse]("UpdateIndividualSearchHit", resp, err)
+	return apicall.Decode[PutIndividualSearchIdHitsByHitIdResponse]("UpdateIndividualSearchHit", resp, err)
 }
 
 // ListIndividualSearchHitChanges sends GET /compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/changes.
@@ -28616,7 +28617,7 @@ func (c *Client) UpdateIndividualSearchHit(ctx context.Context, searchId openapi
 // Returns Change History For An Individual Hit
 func (c *Client) ListIndividualSearchHitChanges(ctx context.Context, searchId string, hitId string, reqEditors ...RequestEditorFn) (*KYCIndividualSearchHitChangesResponse, error) {
 	resp, err := c.raw.ListIndividualSearchHitChanges(ctx, searchId, hitId, reqEditors...)
-	return decode[KYCIndividualSearchHitChangesResponse]("ListIndividualSearchHitChanges", resp, err)
+	return apicall.Decode[KYCIndividualSearchHitChangesResponse]("ListIndividualSearchHitChanges", resp, err)
 }
 
 // DownloadIndividualSearchHit sends GET /compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/download.
@@ -28624,7 +28625,7 @@ func (c *Client) ListIndividualSearchHitChanges(ctx context.Context, searchId st
 // Download Individual AML Details for a Hit
 func (c *Client) DownloadIndividualSearchHit(ctx context.Context, searchId openapi_types.UUID, hitId openapi_types.UUID, reqEditors ...RequestEditorFn) (*WebApiModelsSearchesSearchResultHitsBusinessSearchHitAttachmentLinkResponse, error) {
 	resp, err := c.raw.DownloadIndividualSearchHit(ctx, searchId, hitId, reqEditors...)
-	return decode[WebApiModelsSearchesSearchResultHitsBusinessSearchHitAttachmentLinkResponse]("DownloadIndividualSearchHit", resp, err)
+	return apicall.Decode[WebApiModelsSearchesSearchResultHitsBusinessSearchHitAttachmentLinkResponse]("DownloadIndividualSearchHit", resp, err)
 }
 
 // UpdateIndividualSearchHitNote sends PUT /compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/note.
@@ -28632,7 +28633,7 @@ func (c *Client) DownloadIndividualSearchHit(ctx context.Context, searchId opena
 // Update The Note For A Single Individuals Hit
 func (c *Client) UpdateIndividualSearchHitNote(ctx context.Context, searchId openapi_types.UUID, hitId openapi_types.UUID, body UpdateIndividualSearchHitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*PutIndividualSearchIdHitsByHitIdResponse, error) {
 	resp, err := c.raw.UpdateIndividualSearchHitNote(ctx, searchId, hitId, body, reqEditors...)
-	return decode[PutIndividualSearchIdHitsByHitIdResponse]("UpdateIndividualSearchHitNote", resp, err)
+	return apicall.Decode[PutIndividualSearchIdHitsByHitIdResponse]("UpdateIndividualSearchHitNote", resp, err)
 }
 
 // DownloadIndividualSearchHitCopyrightedSource sends GET /compliance/kyc-protect/searches/individuals/{searchId}/hits/{hitId}/sources/{sourceId}/copyrighted/download.
@@ -28640,7 +28641,7 @@ func (c *Client) UpdateIndividualSearchHitNote(ctx context.Context, searchId ope
 // Return Individual AML Copyrighted Download URL
 func (c *Client) DownloadIndividualSearchHitCopyrightedSource(ctx context.Context, searchId string, hitId string, sourceId string, reqEditors ...RequestEditorFn) (*WebApiModelsSearchesBusinessesSearchIdHitsHitIdSourcesSourceIdCopyrightedDownloadResponse, error) {
 	resp, err := c.raw.DownloadIndividualSearchHitCopyrightedSource(ctx, searchId, hitId, sourceId, reqEditors...)
-	return decode[WebApiModelsSearchesBusinessesSearchIdHitsHitIdSourcesSourceIdCopyrightedDownloadResponse]("DownloadIndividualSearchHitCopyrightedSource", resp, err)
+	return apicall.Decode[WebApiModelsSearchesBusinessesSearchIdHitsHitIdSourcesSourceIdCopyrightedDownloadResponse]("DownloadIndividualSearchHitCopyrightedSource", resp, err)
 }
 
 // DownloadMonitoredSearches sends GET /compliance/kyc-protect/searches/monitored/download.
@@ -28648,7 +28649,7 @@ func (c *Client) DownloadIndividualSearchHitCopyrightedSource(ctx context.Contex
 // Download A CSV Report Of Monitored Searches
 func (c *Client) DownloadMonitoredSearches(ctx context.Context, params *DownloadMonitoredSearchesParams, reqEditors ...RequestEditorFn) (*KycProtectGetMonitoredSearchesDownloadResponse, error) {
 	resp, err := c.raw.DownloadMonitoredSearches(ctx, params, reqEditors...)
-	return decode[KycProtectGetMonitoredSearchesDownloadResponse]("DownloadMonitoredSearches", resp, err)
+	return apicall.Decode[KycProtectGetMonitoredSearchesDownloadResponse]("DownloadMonitoredSearches", resp, err)
 }
 
 // GetAMLPreferences sends GET /compliance/kyc-protect/settings/preferences/aml.
@@ -28656,7 +28657,7 @@ func (c *Client) DownloadMonitoredSearches(ctx context.Context, params *Download
 // Return AML Preference Settings
 func (c *Client) GetAMLPreferences(ctx context.Context, params *GetAMLPreferencesParams, reqEditors ...RequestEditorFn) (*KYCGetSettingsPreferencesAmlResponse, error) {
 	resp, err := c.raw.GetAMLPreferences(ctx, params, reqEditors...)
-	return decode[KYCGetSettingsPreferencesAmlResponse]("GetAMLPreferences", resp, err)
+	return apicall.Decode[KYCGetSettingsPreferencesAmlResponse]("GetAMLPreferences", resp, err)
 }
 
 // UpdateAMLPreferences sends PUT /compliance/kyc-protect/settings/preferences/aml.
@@ -28664,5 +28665,5 @@ func (c *Client) GetAMLPreferences(ctx context.Context, params *GetAMLPreference
 // Update AML Preference Settings
 func (c *Client) UpdateAMLPreferences(ctx context.Context, body UpdateAMLPreferencesJSONRequestBody, reqEditors ...RequestEditorFn) (*KYCGetSettingsPreferencesAmlResponse, error) {
 	resp, err := c.raw.UpdateAMLPreferences(ctx, body, reqEditors...)
-	return decode[KYCGetSettingsPreferencesAmlResponse]("UpdateAMLPreferences", resp, err)
+	return apicall.Decode[KYCGetSettingsPreferencesAmlResponse]("UpdateAMLPreferences", resp, err)
 }

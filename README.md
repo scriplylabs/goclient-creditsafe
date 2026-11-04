@@ -21,23 +21,27 @@ Requires Go 1.24 or later.
 | Package | API |
 | --- | --- |
 | `creditsafe` | The shared client: login, token renewal and errors |
+| `creditsafe/creditrisk` | Credit and Risk: company and director search, credit reports, images, fresh investigations |
 | `creditsafe/kyc` | KYC Protect: profiles, AML screening, monitoring, reports, RBAC |
 
-```go
-k := kyc.New(cs)
+Each product needs its own subscription with Creditsafe; a product you don't
+have answers `ErrForbidden`.
 
-profile, err := k.GetProfile(ctx, profileID)
+```go
+cr := creditrisk.New(cs)
+
+report, err := cr.GetCompanyCreditReport(ctx, connectID, nil)
 if errors.Is(err, creditsafe.ErrNotFound) {
 	// ...
 }
 ```
 
-The `kyc` package is generated from Creditsafe's OpenAPI spec. To regenerate
-it, for example after Creditsafe updates the spec:
+The product packages are generated from Creditsafe's OpenAPI specs. To
+regenerate them, for example after Creditsafe updates a spec:
 
 ```sh
-scripts/generate.sh                         # from kyc/openapi/kycProtect.json
-scripts/generate.sh ~/Downloads/kycProtect.json  # replace the spec first
+scripts/generate.sh                                          # regenerate every package
+scripts/generate.sh creditrisk ~/Downloads/creditAndRisk.json  # replace a spec first
 ```
 
 ## Authentication

@@ -14,5 +14,8 @@ output-options:
   overlay:
     path: openapi/overlay.yaml
   user-templates:
-    client.tmpl: templates/client.tmpl
-    client-with-responses.tmpl: templates/client-with-responses.tmpl
+    client.tmpl: ../codegen/templates/client.tmpl
+    client-with-responses.tmpl: ../codegen/templates/client-with-responses.tmpl
+# The generated methods return through these helpers.
+additional-imports:
+  - package: github.com/scriplylabs/goclient-creditsafe/internal/apicall
